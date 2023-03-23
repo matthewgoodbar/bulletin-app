@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { isProduction } = requure('../../config/keys');
+const { isProduction } = require('../../config/keys');
 
 if (!isProduction) {
     router.get('/restore', (req, res, next) => {
