@@ -4,8 +4,10 @@ const logger = require('morgan');
 
 const cors = require('cors');
 const { isProduction } = require('./config/keys');
+const csurf = require('csurf');
 
 const usersRouter = require('./routes/api/users');
+const csrfRouter = require('./routes/api/csrf');
 
 const app = express();
 
@@ -18,7 +20,17 @@ app.use(cookieParser());
 if (!isProduction) {
     app.use(cors());
 }
+app.use(
+    csurf({
+        cookie: {
+            secure: isProduction,
+            sameSite: isProduction && "Lax",
+            httpOnly: true,
+        }
+    })
+);
 
 app.use('/api/users', usersRouter);
+app.use('/api/csrf', csrfRouter);
 
 module.exports = app;
