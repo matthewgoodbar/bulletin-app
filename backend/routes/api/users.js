@@ -4,9 +4,11 @@ const db = require('../../db');
 const bcrypt = require('bcryptjs');
 const debug = require('debug')('backend:debug');
 
+const userReturnFormat = 'id, username, "createdAt"'
+
 router.get('/', async (req, res, next) => {
   try {
-    const dbQuery = await db.query('SELECT id, username, "createdAt" FROM users');
+    const dbQuery = await db.query(`SELECT ${userReturnFormat} FROM users`);
     res.json(dbQuery.rows);
   } catch (err) {
     return next(err);
@@ -29,7 +31,7 @@ router.post('/register', async (req, res, next) => {
     }
 
     // Username does not exist, go ahead with user registration
-    const text = 'INSERT INTO users(username, "hashedPassword") VALUES($1, $2) RETURNING id, username, "createdAt"';
+    const text = `INSERT INTO users(username, "hashedPassword") VALUES($1, $2) RETURNING ${userReturnFormat}`;
     const values = [req.body.username];
 
     // Create hashed password
