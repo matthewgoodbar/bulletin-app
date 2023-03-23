@@ -1,11 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-/* GET users listing. */
 router.get('/', (req, res, next) => {
   res.json({
     message: 'GET /api/users'
-  })
+  });
+});
+
+router.post('/', (req, res) => {
+  res.json({
+    request: req.body
+  });
 });
 
 module.exports = router;

@@ -1,6 +1,8 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const debug = require('debug');
+const errorLog = debug('backend:error');
 
 const cors = require('cors');
 const { isProduction } = require('./config/keys');
@@ -30,7 +32,27 @@ app.use(
     })
 );
 
+// Define routes
 app.use('/api/users', usersRouter);
 app.use('/api/csrf', csrfRouter);
+
+// Error handling Middleware
+// Catch unmatched requests
+app.use((req, res, next) => {
+    const err = new Error('Not Found');
+    err.statusCode = 404;
+    next(err);
+});
+// Error handler for routes
+app.use((err, req, res, next) => {
+    errorLog(err);
+    const statusCode = err.statusCode || 500;
+    res.status(statusCode);
+    res.json({
+        message: err.message,
+        statusCode,
+        errors: err.errors,
+    });
+});
 
 module.exports = app;
