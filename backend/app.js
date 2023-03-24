@@ -11,6 +11,7 @@ const { isProduction } = require('./config/keys');
 const csurf = require('csurf');
 
 const usersRouter = require('./routes/api/users');
+const postsRouter = require('./routes/api/posts');
 const csrfRouter = require('./routes/api/csrf');
 
 const app = express();
@@ -37,6 +38,7 @@ app.use(
 
 // Define routes
 app.use('/api/users', usersRouter);
+app.use('/api/posts', postsRouter);
 app.use('/api/csrf', csrfRouter);
 
 // Error handling Middleware

@@ -9,13 +9,14 @@ const validateRegisterInput = require('../../validations/register');
 const validateLoginInput = require('../../validations/login');
 const debug = require('debug')('backend:debug');
 
-const userReturnFormat = 'id, username, "createdAt"'
+const userReturnFormat = 'users.id, users.username, users."createdAt"'
 
 router.get('/', async (req, res, next) => {
   try {
     const dbQuery = await db.query(`SELECT ${userReturnFormat} FROM users`);
-    debug(dbQuery.rows[0]);
-    res.json(dbQuery.rows);
+    res.json({
+      users: dbQuery.rows,
+    });
   } catch (err) {
     return next(err);
   }

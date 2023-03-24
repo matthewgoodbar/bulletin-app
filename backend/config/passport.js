@@ -31,7 +31,6 @@ options.secretOrKey = secretOrKey;
 
 passport.use(new JwtStrategy(options, async (jwtPayload, done) => {
     try {
-        debug(jwtPayload);
         const dbQuery = await db.query('SELECT * FROM users WHERE id = $1', [jwtPayload.id]);
         const user = dbQuery.rows[0];
         if (user) {
