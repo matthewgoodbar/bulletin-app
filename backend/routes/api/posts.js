@@ -50,14 +50,20 @@ router.get('/', async (req, res, next) => {
 });
 
 router.post('/', requireUser, validatePostInput, async (req, res, next) => {
+    const client = await db.getClient();
     try {
         const text = `INSERT INTO posts(title, body, "userId") VALUES($1, $2, $3) RETURNING ${postReturnFormat}`;
         const values = [req.body.title, req.body.body, req.user.id];
-        const dbQuery = await db.query(text, values);
+        await client.query('BEGIN');
+        const dbQuery = await client.query(text, values);
+        await client.query('COMMIT');
+        client.release();
         res.json({
             post: dbQuery.rows[0]
         })
     } catch (err) {
+        await client.query('ROLLBACK');
+        client.release();
         return next(err);
     }
 });

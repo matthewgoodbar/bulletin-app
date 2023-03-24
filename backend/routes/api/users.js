@@ -64,11 +64,17 @@ router.post('/register', validateRegisterInput, async (req, res, next) => {
         values.push(newHashedPassword);
 
         // Try adding new user to database
+        const client = await db.getClient();
         try {
-          const addUserQuery = await db.query(text, values);
+          await client.query('BEGIN');
+          const addUserQuery = await client.query(text, values);
           const user = addUserQuery.rows[0];
+          await client.query('COMMIT');
+          client.release();
           res.json(await loginUser(user));
         } catch (err) {
+          await client.query('ROLLBACK');
+          client.release();
           return next(err);
         }
 
