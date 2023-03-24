@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "dev": "dotenv nodemon ./bin/www --inspect",
     "migrate": "dotenv node-pg-migrate",
-    "seed": "dotenv node ./seeds/seeds.js",
+    "seed": "dotenv node ./seeds/seeds.js"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
