@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('../../db');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const { loginUser } = require('../../config/passport');
 const debug = require('debug')('backend:debug');
 
 const userReturnFormat = 'id, username, "createdAt"'
@@ -46,7 +47,8 @@ router.post('/register', async (req, res, next) => {
         // Try adding new user to database
         try {
           const addUserQuery = await db.query(text, values);
-          res.json(addUserQuery.rows[0])
+          const user = addUserQuery.rows[0];
+          res.json(await loginUser(user));
         } catch (err) {
           return next(err);
         }
@@ -68,7 +70,7 @@ router.post('/login', async (req, res, next) => {
       err.errors = { username: 'Invalid credentials' };
       return next(err);
     }
-    return res.json({ user });
+    return res.json(await loginUser(user));
   })(req, res, next);
 });
 

@@ -1,6 +1,8 @@
 const express = require('express');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const jwt = require('jsonwebtoken');
+const { secretOrKey } = require('./keys');
 const bcrypt = require('bcryptjs');
 const db = require('../db');
 
@@ -20,3 +22,20 @@ passport.use(new LocalStrategy({
         done(null, false);
     }
 }));
+
+exports.loginUser = async function(user) {
+    const userInfo = {
+        id: user.id,
+        username: user.username,
+        createdAt: user.createdAt,
+    };
+    const token = await jwt.sign(
+        userInfo,
+        secretOrKey,
+        { expiresIn: 3600 },
+    );
+    return {
+        user: userInfo,
+        token
+    };
+};
