@@ -3,7 +3,8 @@ const router = express.Router();
 const db = require('../../db');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
-const { loginUser } = require('../../config/passport');
+const { loginUser, restoreUser } = require('../../config/passport');
+const { isProduction } = require('../../config/keys');
 const debug = require('debug')('backend:debug');
 
 const userReturnFormat = 'id, username, "createdAt"'
@@ -16,6 +17,19 @@ router.get('/', async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
+});
+
+router.get('/current', restoreUser, (req, res) => {
+  if (!isProduction) {
+    csrfToken = req.csrfToken();
+    res.cookie("CSRF-TOKEN", csrfToken);
+  }
+  if (!req.user) return res.json(null);
+  res.json({
+    id: req.user.id,
+    username: req.user.username,
+    createdAt: req.user.createdAt,
+  });
 });
 
 router.post('/register', async (req, res, next) => {
