@@ -26,9 +26,11 @@ router.get('/current', restoreUser, (req, res) => {
   }
   if (!req.user) return res.json(null);
   res.json({
-    id: req.user.id,
-    username: req.user.username,
-    createdAt: req.user.createdAt,
+    user: {
+      id: req.user.id,
+      username: req.user.username,
+      createdAt: req.user.createdAt,
+    },
   });
 });
 
