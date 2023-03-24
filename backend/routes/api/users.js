@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../../db');
 const bcrypt = require('bcryptjs');
+const passport = require('passport');
 const debug = require('debug')('backend:debug');
 
 const userReturnFormat = 'id, username, "createdAt"'
@@ -9,6 +10,7 @@ const userReturnFormat = 'id, username, "createdAt"'
 router.get('/', async (req, res, next) => {
   try {
     const dbQuery = await db.query(`SELECT ${userReturnFormat} FROM users`);
+    debug(dbQuery.rows[0]);
     res.json(dbQuery.rows);
   } catch (err) {
     return next(err);
@@ -55,6 +57,19 @@ router.post('/register', async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
+});
+
+router.post('/login', async (req, res, next) => {
+  passport.authenticate('local', async function(err, user) {
+    if (err) return next(err);
+    if (!user) {
+      const err = new Error('Invalid credentials');
+      err.statusCode = 400;
+      err.errors = { username: 'Invalid credentials' };
+      return next(err);
+    }
+    return res.json({ user });
+  })(req, res, next);
 });
 
 module.exports = router;

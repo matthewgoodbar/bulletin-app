@@ -4,6 +4,8 @@ const logger = require('morgan');
 const debug = require('debug');
 const errorLog = debug('backend:error');
 
+require('./config/passport');
+const passport = require('passport');
 const cors = require('cors');
 const { isProduction } = require('./config/keys');
 const csurf = require('csurf');
@@ -19,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Security Middleware
+app.use(passport.initialize());
 if (!isProduction) {
     app.use(cors());
 }
