@@ -5,6 +5,8 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const { loginUser, restoreUser } = require('../../config/passport');
 const { isProduction } = require('../../config/keys');
+const validateRegisterInput = require('../../validations/register');
+const validateLoginInput = require('../../validations/login');
 const debug = require('debug')('backend:debug');
 
 const userReturnFormat = 'id, username, "createdAt"'
@@ -34,7 +36,7 @@ router.get('/current', restoreUser, (req, res) => {
   });
 });
 
-router.post('/register', async (req, res, next) => {
+router.post('/register', validateRegisterInput, async (req, res, next) => {
   try {
     // See if user exists with username
     const dbQuery = await db.query('SELECT * FROM users WHERE username = $1', [req.body.username]);
@@ -77,7 +79,7 @@ router.post('/register', async (req, res, next) => {
   }
 });
 
-router.post('/login', async (req, res, next) => {
+router.post('/login', validateLoginInput, async (req, res, next) => {
   passport.authenticate('local', async function(err, user) {
     if (err) return next(err);
     if (!user) {
