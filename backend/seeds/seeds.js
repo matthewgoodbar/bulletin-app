@@ -7,12 +7,18 @@ const bcrypt = require('bcryptjs');
 const faker = require('@faker-js/faker');
 
 const client = new Client();
-client.connect()
-    .then(() => {
-        dbLog('Connected to Postgres Database...');
-    })
-    .catch(err => {
+(async () => {
+    try {
+        dbLog('Connecting to Postgres instance...');
+        await client.connect();
+        await client.query('BEGIN');
+
+        await client.query('COMMIT');
+        client.end()
+        dbLog('Seeded successfully!');
+    } catch (err) {
+        await client.query('ROLLBACK');
+        client.end();
         serverLog(err);
-    });
-client.query
-client.end();
+    }
+})();
