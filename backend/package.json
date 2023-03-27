@@ -23,7 +23,8 @@
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
-    "pg": "^8.10.0"
+    "pg": "^8.10.0",
+    "pg-format": "^1.0.4"
   },
   "devDependencies": {
     "dotenv-cli": "^7.1.0",
