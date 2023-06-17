@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const { secretOrKey } = require('./keys');
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 const bcrypt = require('bcryptjs');
-const db = require('../db');
 const { Prisma, PrismaClient } = require('@prisma/client');
 const debug = require('debug')('backend:debug');
 
@@ -16,8 +15,6 @@ passport.use(new LocalStrategy({
     usernameField: 'username',
     passwordField: 'password',
 }, async function (username, password, done) {
-    // const dbQuery = await db.query('SELECT * FROM users WHERE username = $1', [username]);
-    // const user = dbQuery.rows[0];
     const user = await prisma.user.findUnique({
         where: {
             username: username,
@@ -40,13 +37,11 @@ options.secretOrKey = secretOrKey;
 passport.use(new JwtStrategy(options, async (jwtPayload, done) => {
     try {
         const { id } = jwtPayload;
-        // const dbQuery = await db.query('SELECT * FROM users WHERE id = $1', [jwtPayload.id]);
-        // const user = dbQuery.rows[0];
         const user = await prisma.user.findUnique({
             where: {
                 id: id,
             },
-        })
+        });
         if (user) {
             return done(null, user);
         }
