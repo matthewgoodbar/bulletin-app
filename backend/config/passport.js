@@ -6,15 +6,23 @@ const { secretOrKey } = require('./keys');
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 const bcrypt = require('bcryptjs');
 const db = require('../db');
+const { Prisma, PrismaClient } = require('@prisma/client');
 const debug = require('debug')('backend:debug');
+
+const prisma = new PrismaClient();
 
 passport.use(new LocalStrategy({
     session: false,
     usernameField: 'username',
     passwordField: 'password',
 }, async function (username, password, done) {
-    const dbQuery = await db.query('SELECT * FROM users WHERE username = $1', [username]);
-    const user = dbQuery.rows[0];
+    // const dbQuery = await db.query('SELECT * FROM users WHERE username = $1', [username]);
+    // const user = dbQuery.rows[0];
+    const user = await prisma.user.findUnique({
+        where: {
+            username: username,
+        },
+    });
     if (user) {
         bcrypt.compare(password, user.hashedPassword, (err, isMatch) => {
             if (err || !isMatch) done(null, false);
@@ -31,8 +39,14 @@ options.secretOrKey = secretOrKey;
 
 passport.use(new JwtStrategy(options, async (jwtPayload, done) => {
     try {
-        const dbQuery = await db.query('SELECT * FROM users WHERE id = $1', [jwtPayload.id]);
-        const user = dbQuery.rows[0];
+        const { id } = jwtPayload;
+        // const dbQuery = await db.query('SELECT * FROM users WHERE id = $1', [jwtPayload.id]);
+        // const user = dbQuery.rows[0];
+        const user = await prisma.user.findUnique({
+            where: {
+                id: id,
+            },
+        })
         if (user) {
             return done(null, user);
         }
