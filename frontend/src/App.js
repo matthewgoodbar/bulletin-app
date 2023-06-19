@@ -10,6 +10,7 @@ import { AuthRoute, ProtectedRoute } from './components/Routes/Routes';
 import HomePage from './components/HomePage';
 import Login from './components/Login';
 import Goodbye from './components/Goodbye';
+import NotFound from './components/NotFound';
 
 import { getCurrentUser } from './store/session';
 
@@ -28,9 +29,10 @@ function App() {
       <Route exact path="/" element={<HomePage />} />
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/goodbye" element={<Goodbye />} />
+      <Route exact path="/404" element={<NotFound />} />
       <Route 
         path='*'
-        element={<Navigate to='/' replace />}
+        element={<Navigate to='/404' replace />}
       />
     </Routes>
   );
