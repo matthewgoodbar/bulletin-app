@@ -3,7 +3,7 @@ import jwtFetch from "./jwt";
 const RECEIVE_CURRENT_USER = "session/RECEIVE_CURRENT_USER";
 const RECEIVE_SESSION_ERRORS = "session/RECEIVE_SESSION_ERRORS";
 const CLEAR_SESSION_ERRORS = "session/CLEAR_SESSION_ERRORS";
-export const RECEIVE_USER_LOGOUT = "session/RECEIVE_USER_LOGOUT";
+const RECEIVE_USER_LOGOUT = "session/RECEIVE_USER_LOGOUT";
 
 const receiveCurrentUser = currentUser => ({
     type: RECEIVE_CURRENT_USER,
@@ -19,7 +19,7 @@ export const clearSessionErrors = () => ({
     type: CLEAR_SESSION_ERRORS,
 });
 
-export const logoutUser = () => ({
+const logoutUser = () => ({
     type: RECEIVE_USER_LOGOUT,
 });
 
@@ -72,13 +72,13 @@ export const sessionErrorsReducer = (state = nullErrors, action) => {
 
 // Session Reducer
 const initialState = {
-    user: undefined,
+    currentUser: undefined,
 };
 
 const sessionReducer = (state = initialState, action) => {
     switch (action.type) {
         case RECEIVE_CURRENT_USER:
-            return { user: action.currentUser };
+            return { currentUser: action.currentUser };
         case RECEIVE_USER_LOGOUT:
             return initialState;
         default:

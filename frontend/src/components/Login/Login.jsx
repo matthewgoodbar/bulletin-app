@@ -9,7 +9,7 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const errors = useSelector(state => state.errors.session);
-    const currentUser = useSelector(state => state.session.user);
+    const currentUser = useSelector(state => state.session.currentUser);
     const dispatch = useDispatch();
 
     useEffect(() => {

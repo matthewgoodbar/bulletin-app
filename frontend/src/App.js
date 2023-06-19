@@ -9,6 +9,7 @@ import { AuthRoute, ProtectedRoute } from './components/Routes/Routes';
 
 import HomePage from './components/HomePage';
 import Login from './components/Login';
+import Goodbye from './components/Goodbye';
 
 import { getCurrentUser } from './store/session';
 
@@ -26,6 +27,7 @@ function App() {
     <Routes>
       <Route exact path="/" element={<HomePage />} />
       <Route exact path="/login" element={<Login />} />
+      <Route exact path="/goodbye" element={<Goodbye />} />
       <Route 
         path='*'
         element={<Navigate to='/' replace />}

@@ -33,7 +33,7 @@ router.get('/current', restoreUser, (req, res) => {
     csrfToken = req.csrfToken();
     res.cookie("CSRF-TOKEN", csrfToken);
   }
-  if (!req.user) return res.json(null);
+  if (!req.user) return res.json({ user: null });
   res.json({
     user: {
       id: req.user.id,
