@@ -23,8 +23,9 @@ export const logoutUser = () => ({
     type: RECEIVE_USER_LOGOUT,
 });
 
-export const signup = user =>  startSession(user, 'api/users/register');
-export const login = user => startSession(user, 'api/users/login');
+// Thunk Actions
+export const signup = user =>  startSession(user, '/api/users/register');
+export const login = user => startSession(user, '/api/users/login');
 
 const startSession = (userInfo, route) => async dispatch => {
     try {
@@ -45,7 +46,13 @@ const startSession = (userInfo, route) => async dispatch => {
 
 export const logout = () => dispatch => {
     localStorage.removeItem('jwtToken');
-    dispatch(logoutUser());
+    return dispatch(logoutUser());
+};
+
+export const getCurrentUser = () => async dispatch => {
+    const res = await jwtFetch('/api/users/current');
+    const user = await res.json();
+    return dispatch(receiveCurrentUser(user));
 };
 
 // Session Errors Reducer
