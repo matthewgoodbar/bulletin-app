@@ -15,7 +15,7 @@ const receiveSessionErrors = errors => ({
     errors,
 });
 
-const clearSessionErrors = () => ({
+export const clearSessionErrors = () => ({
     type: CLEAR_SESSION_ERRORS,
 });
 
@@ -51,7 +51,7 @@ export const logout = () => dispatch => {
 
 export const getCurrentUser = () => async dispatch => {
     const res = await jwtFetch('/api/users/current');
-    const user = await res.json();
+    const { user } = await res.json();
     return dispatch(receiveCurrentUser(user));
 };
 
@@ -62,6 +62,7 @@ export const sessionErrorsReducer = (state = nullErrors, action) => {
     switch(action.type) {
         case RECEIVE_SESSION_ERRORS:
             return action.errors;
+        case RECEIVE_CURRENT_USER:
         case CLEAR_SESSION_ERRORS:
             return nullErrors;
         default:
