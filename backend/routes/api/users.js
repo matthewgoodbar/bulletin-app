@@ -8,6 +8,7 @@ const { isProduction } = require('../../config/keys');
 const validateRegisterInput = require('../../validations/register');
 const validateLoginInput = require('../../validations/login');
 const debug = require('debug')('backend:debug');
+const { formatArray } = require('../../utils/format');
 
 const prisma = new PrismaClient();
 
@@ -20,8 +21,9 @@ router.get('/', async (req, res, next) => {
         createdAt: true
       },
     });
+    const formattedUsers = formatArray(users);
     res.json({
-      users: users,
+      users: formattedUsers,
     });
   } catch (err) {
     return next(err);

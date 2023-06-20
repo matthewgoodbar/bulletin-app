@@ -3,6 +3,7 @@ const router = express.Router();
 const { Prisma, PrismaClient } = require('@prisma/client');
 const validatePostInput = require('../../validations/posts');
 const { requireUser } = require('../../config/passport');
+const { formatArray } = require('../../utils/format');
 
 const prisma = new PrismaClient();
 
@@ -41,8 +42,9 @@ router.get('/:id', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
     try {
         const queriedPosts = await prisma.post.findMany();
+        const formattedPosts = formatArray(queriedPosts);
         res.json({
-            posts: queriedPosts,
+            posts: formattedPosts,
         });
     } catch (err) {
         return next(err);
