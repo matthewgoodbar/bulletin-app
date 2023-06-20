@@ -9,6 +9,7 @@ const Goodbye = () => {
     const dispatch = useDispatch();
 
     const handleLogout = e => {
+        e.preventDefault();
         dispatch(logout());
     };
 

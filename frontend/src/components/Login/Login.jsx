@@ -26,7 +26,6 @@ const Login = () => {
     const handleSubmit = e => {
         e.preventDefault();
         dispatch(login({ username, password }));
-        return redirect('/');
     };
 
     if (currentUser) {
@@ -37,7 +36,7 @@ const Login = () => {
 
     return (
         <>
-            <h1>LOGIN</h1>
+            <h1>LOG IN</h1>
             <form onSubmit={handleSubmit}>
                 <div>{errors?.username}</div>
                 <label> Username

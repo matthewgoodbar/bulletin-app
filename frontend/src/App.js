@@ -9,6 +9,7 @@ import { AuthRoute, ProtectedRoute } from './components/Routes/Routes';
 
 import HomePage from './components/HomePage';
 import Login from './components/Login';
+import Signup from './components/Signup';
 import Goodbye from './components/Goodbye';
 import NotFound from './components/NotFound';
 
@@ -28,6 +29,7 @@ function App() {
     <Routes>
       <Route exact path="/" element={<HomePage />} />
       <Route exact path="/login" element={<Login />} />
+      <Route exact path="/signup" element={<Signup />} />
       <Route exact path="/goodbye" element={<Goodbye />} />
       <Route exact path="/404" element={<NotFound />} />
       <Route 
