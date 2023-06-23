@@ -28,6 +28,7 @@ const HomePage = () => {
         <>
             <h1>THIS IS MY HOMEPAGE</h1>
             {greeting}
+            <p><Link to="/posts">View Posts</Link></p>
         </>
     );
 };

@@ -11,6 +11,7 @@ import HomePage from './components/HomePage';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Goodbye from './components/Goodbye';
+import Posts from './components/Posts';
 import NotFound from './components/NotFound';
 
 import { getCurrentUser } from './store/session';
@@ -31,6 +32,7 @@ function App() {
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/signup" element={<Signup />} />
       <Route exact path="/goodbye" element={<Goodbye />} />
+      <Route exact path = "/posts" element={<Posts />} />
       <Route exact path="/404" element={<NotFound />} />
       <Route 
         path='*'
