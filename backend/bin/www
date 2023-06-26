@@ -9,7 +9,7 @@ var debug = require('debug');
 var dbLog = debug('backend:postgres');
 var serverLog = debug('backend:server');
 var http = require('http');
-const { Pool, Client } = require('pg')
+// const { Pool, Client } = require('pg');
 
 /**
  * Get port from environment and store in Express.
@@ -27,15 +27,16 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-const client = new Client()
-client.connect()
-  .then(() => {
-    dbLog("Connected to Postgres successfully");
-    server.listen(port);
-  })
-  .catch((err) => {
-    serverLog(err);
-  });
+// const client = new Client()
+// client.connect()
+//   .then(() => {
+//     dbLog("Connected to Postgres successfully");
+//     server.listen(port);
+//   })
+//   .catch((err) => {
+//     serverLog(err);
+//   });
+server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
