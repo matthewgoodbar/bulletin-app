@@ -4,6 +4,7 @@ const { Prisma, PrismaClient } = require('@prisma/client');
 const validatePostInput = require('../../validations/posts');
 const { requireUser } = require('../../config/passport');
 const { formatArray } = require('../../utils/format');
+const socket = require('../../utils/socket');
 
 const prisma = new PrismaClient();
 
@@ -28,7 +29,7 @@ router.get('/:id', async (req, res, next) => {
         const { id } = req.params;
         const queriedPost = await prisma.post.findUnique({
             where: {
-                id: id,
+                id: parseInt(id),
             },
         });
         res.json({
@@ -53,6 +54,7 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', requireUser, validatePostInput, async (req, res, next) => {
     try {
+        socket.connect();
         const { title, body } = req.body;
         const { id } = req.user;
         const post = await prisma.post.create({
@@ -62,6 +64,7 @@ router.post('/', requireUser, validatePostInput, async (req, res, next) => {
                 authorId: id,
             },
         });
+        socket.emit("publish new post", post.id);
         res.json({
             post: post,
         });

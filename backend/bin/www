@@ -31,6 +31,15 @@ io.on("connection", (socket) => {
   
   serverLog(socket.id);
 
+  socket.on("test", (message) => {
+    serverLog(message);
+    io.emit("test response", message);
+  });
+
+  socket.on("publish new post", (postId) => {
+    io.emit("pull new post", postId);
+  });
+
   // socket.on("publish message", (message) => {
   //   socket.emit()
   // });

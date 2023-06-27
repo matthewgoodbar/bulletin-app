@@ -56,6 +56,19 @@ export const fetchPosts = () => async dispatch => {
     }
 };
 
+export const fetchPost = postId => async dispatch => {
+    try {
+        const res = await jwtFetch(`/api/posts/${postId}`);
+        const { post } = await res.json();
+        return dispatch(addPost(post));
+    } catch(err) {
+        const errBody = await err.json();
+        if (errBody.statusCode === 400) {
+            return dispatch(receivePostErrors(errBody.errors));
+        }
+    }
+};
+
 export const fetchUserPosts = userId => async dispatch => {
     try {
         const res = await jwtFetch(`/api/posts/author/${userId}`);
@@ -76,7 +89,7 @@ export const createPost = data => async dispatch => {
             body: JSON.stringify(data),
         });
         const { post } = await res.json();
-        return dispatch(addPost(post));
+        // return dispatch(addPost(post));
     } catch(err) {
         const errBody = await err.json();
         if (errBody.statusCode === 400) {
