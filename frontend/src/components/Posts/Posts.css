@@ -1,13 +1,24 @@
 #posts-box {
     box-sizing: border-box;
     border: 1px solid black;
-    height: 85vh;
+    /* height: 85vh;
     width: 90vw;
     padding: 20px;
     margin-top: 10vh;
     margin-bottom: 5vh;
     margin-left: 5vw;
-    margin-right: 5vw;
+    margin-right: 5vw; */
     scroll-behavior: smooth;
     overflow-y: scroll;
+}
+
+#posts-box-preamble {
+    padding: 10px;
+    display: flex;
+}
+
+.single-post {
+    box-sizing: border-box;
+    padding: 10px;
+    border-bottom: 1px solid black;
 }

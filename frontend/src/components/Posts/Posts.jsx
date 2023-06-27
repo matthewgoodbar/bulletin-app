@@ -6,7 +6,7 @@ import socket from "../../utils/socket";
 
 const Posts = () => {
 
-    const posts = useSelector(state => Object.values(state.posts));
+    const posts = useSelector(state => Object.values(state.posts).reverse());
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -15,21 +15,25 @@ const Posts = () => {
 
     return (
         <>
-            <div id="posts-box">
-                <ul>
+            <div className="full-page-content">
+                <div id="posts-box-preamble">
                     <Link to="/">Back to Homepage</Link>
-                    {posts &&
-                    posts.map((post) => 
-                        <li>
-                            <ul>
-                                <li>{post.id}</li>
-                                <li>{post.title}</li>
-                                <li>{post.body}</li>
-                                <li>{post.createdAt}</li>
-                            </ul>
-                        </li>
-                    )}
-                </ul>
+                </div>
+                <div id="posts-box">
+                    <ul>
+                        {posts &&
+                        posts.map((post) => 
+                            <li className="single-post">
+                                <ul>
+                                    <li>{post.id}</li>
+                                    <li>{post.title}</li>
+                                    <li>{post.body}</li>
+                                    <li>{post.createdAt}</li>
+                                </ul>
+                            </li>
+                        )}
+                    </ul>
+                </div>
             </div>
         </>
     );
