@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchPosts } from "../../store/posts";
+import socket from "../../utils/socket";
 
 const Posts = () => {
 

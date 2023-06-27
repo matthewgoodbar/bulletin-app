@@ -9,6 +9,7 @@ var debug = require('debug');
 var dbLog = debug('backend:postgres');
 var serverLog = debug('backend:server');
 var http = require('http');
+const { Server } = require('socket.io');
 // const { Pool, Client } = require('pg');
 
 /**
@@ -23,6 +24,18 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+
+// Websockets Setup
+const io = new Server(server);
+io.on("connection", (socket) => {
+  
+  serverLog(socket.id);
+
+  // socket.on("publish message", (message) => {
+  //   socket.emit()
+  // });
+
+});
 
 /**
  * Listen on provided port, on all network interfaces.
