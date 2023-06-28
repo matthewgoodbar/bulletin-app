@@ -1,13 +1,17 @@
 const bcrypt = require('bcryptjs');
 const { faker } = require('@faker-js/faker');
 
-const NUM_USERS = 20;
+const NUM_USERS = 22;
 const NUM_POSTS = 80;
 const NUM_REPLIES = 80;
 
 const userSeeds = [];
 userSeeds.push({
-    username: "matthew",
+    username: "leibniz",
+    hashedPassword: bcrypt.hashSync("password", 10)
+});
+userSeeds.push({
+    username: "newton",
     hashedPassword: bcrypt.hashSync("password", 10)
 });
 for (let i = 0; i < NUM_USERS; i++) {

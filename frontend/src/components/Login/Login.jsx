@@ -28,6 +28,22 @@ const Login = () => {
         dispatch(login({ username, password }));
     };
 
+    const handleLeibniz = e => {
+        e.preventDefault();
+        dispatch(login({
+            username: "leibniz",
+            password: "password",
+        }));
+    };
+
+    const handleNewton = e => {
+        e.preventDefault();
+        dispatch(login({
+            username: "newton",
+            password: "password",
+        }));
+    };
+
     if (currentUser) {
         return (
             <Navigate to='/' />
@@ -59,6 +75,8 @@ const Login = () => {
                     disabled={!username || !password}
                 />
             </form>
+            <button onClick={handleLeibniz}>Login as Leibniz</button>
+            <button onClick={handleNewton}>Login as Newton</button>
             <Link to='/'>Back to homepage</Link>
         </>
     );
