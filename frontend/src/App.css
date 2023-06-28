@@ -1,7 +1,12 @@
 html {
   height: 100vh;
   /* background-image: linear-gradient(rgb(217, 191, 183), rgb(240, 224, 214)); */
-  background-image: linear-gradient(rgb(240, 224, 214), rgb(217, 191, 183));
+  background-image: linear-gradient(var(--theme-1-light), var(--theme-1-dark));
+}
+
+:root {
+  --theme-1-light: rgb(240, 224, 214);
+  --theme-1-dark: rgb(217, 191, 183);
 }
 
 h1 {
