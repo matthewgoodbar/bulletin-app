@@ -16,17 +16,3 @@
     padding: 10px;
     display: flex;
 }
-
-.single-post {
-    box-sizing: border-box;
-    padding: 10px;
-    border-bottom: 1px solid black;
-    background-color: var(--theme-1-light);
-    animation-name: new-post;
-    animation-duration: 2s;
-}
-
-@keyframes new-post {
-    from {background-color: var(--theme-1-dark);}
-    to {background-color: var(--theme-1-light)}
-}
