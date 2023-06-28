@@ -29,22 +29,18 @@ var server = http.createServer(app);
 const io = new Server(server);
 io.on("connection", (socket) => {
   
-  serverLog(socket.id);
+  serverLog("Connected: " + socket.id);
 
   socket.emit("connected");
 
-  socket.on("test", (message) => {
-    serverLog(message);
-    io.emit("test response", message);
+  socket.on("publish new post", (post) => {
+    io.emit("pull new post", post);
   });
 
-  socket.on("publish new post", (postId) => {
-    io.emit("pull new post", postId);
+  socket.on("disconnect", (reason) => {
+    serverLog("Disconnected: " + socket.id);
+    serverLog("Reason: " + reason);
   });
-
-  // socket.on("publish message", (message) => {
-  //   socket.emit()
-  // });
 
 });
 

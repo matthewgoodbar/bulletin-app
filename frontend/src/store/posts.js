@@ -8,7 +8,7 @@ const CLEAR_POSTS = 'posts/CLEAR_POSTS';
 const RECEIVE_POST_ERRORS = 'posts/RECEIVE_POST_ERRORS';
 const CLEAR_POST_ERRORS = 'posts/CLEAR_POST_ERRORS';
 
-const addPost = post => ({
+export const addPost = post => ({
     type: ADD_POST,
     post,
 });

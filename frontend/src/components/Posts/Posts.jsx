@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { createPost, fetchPost, fetchPosts } from "../../store/posts";
+import { createPost, fetchPost, fetchPosts, addPost } from "../../store/posts";
 import socket from "../../utils/socket";
 import { partialTimestamp } from "../../utils/date";
 
@@ -23,22 +23,17 @@ const Posts = () => {
             setConnected(true);
         }
 
-        function pullNewPost(postId) {
-            dispatch(fetchPost(postId));
+        function pullNewPost({ post }) {
+            dispatch(addPost(post));
         };
 
-        function testResponse(message) {
-            console.log(message);
-        };
 
         socket.on("connected", connectionEstablished);
         socket.on("pull new post", pullNewPost);
-        socket.on("test response", testResponse);
 
         return () => {
             socket.off("connected", connectionEstablished);
             socket.off("pull new post", pullNewPost);
-            socket.off("test response", testResponse);
             socket.disconnect();
             setConnected(false);
         };

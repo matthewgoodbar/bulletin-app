@@ -86,7 +86,19 @@ router.post('/', requireUser, validatePostInput, async (req, res, next) => {
                 authorId: id,
             },
         });
-        socket.emit("publish new post", post.id);
+        const postToSendBack = await prisma.post.findUnique({
+            where: {
+                id: post.id,
+            },
+            include: {
+                author: {
+                    select: {
+                        username: true,
+                    },
+                },
+            },
+        });
+        socket.emit("publish new post", { post: postToSendBack });
         res.json({
             post: post,
         });
