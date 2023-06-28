@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createPost, fetchPost, fetchPosts } from "../../store/posts";
 import socket from "../../utils/socket";
+import { partialTimestamp } from "../../utils/date";
 
 const Posts = () => {
 
@@ -68,7 +69,7 @@ const Posts = () => {
                                     <li>{post.id}</li>
                                     <li>{post.title}</li>
                                     <li>{post.body}</li>
-                                    <li>{post.createdAt}</li>
+                                    <li>{partialTimestamp(post.createdAt)}</li>
                                 </ul>
                             </li>
                         )}
