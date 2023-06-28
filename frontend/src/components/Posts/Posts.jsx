@@ -11,9 +11,9 @@ const Posts = () => {
     const [connected, setConnected] = useState(false);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(fetchPosts());
-    }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(fetchPosts());
+    // }, [dispatch]);
 
     useEffect(() => {
 
@@ -21,12 +21,12 @@ const Posts = () => {
 
         function connectionEstablished() {
             setConnected(true);
+            dispatch(fetchPosts());
         }
 
         function pullNewPost({ post }) {
             dispatch(addPost(post));
         };
-
 
         socket.on("connected", connectionEstablished);
         socket.on("pull new post", pullNewPost);
@@ -37,7 +37,7 @@ const Posts = () => {
             socket.disconnect();
             setConnected(false);
         };
-    }, []);
+    }, [dispatch]);
 
     const onTestButton = e => {
         e.preventDefault();
