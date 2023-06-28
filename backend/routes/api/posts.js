@@ -15,6 +15,13 @@ router.get('/author/:authorId', async (req, res, next) => {
             where: {
                 authorId: parseInt(authorId),
             },
+            include: {
+                author: {
+                    select: {
+                        username: true,
+                    },
+                },
+            },
         });
         res.json({
             posts: queriedPosts,
@@ -31,6 +38,13 @@ router.get('/:id', async (req, res, next) => {
             where: {
                 id: parseInt(id),
             },
+            include: {
+                author: {
+                    select: {
+                        username: true,
+                    },
+                },
+            },
         });
         res.json({
             post: queriedPost,
@@ -42,7 +56,15 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     try {
-        const queriedPosts = await prisma.post.findMany();
+        const queriedPosts = await prisma.post.findMany({
+            include: {
+                author: {
+                    select: {
+                        username: true,
+                    },
+                },
+            },
+        });
         const formattedPosts = formatArray(queriedPosts);
         res.json({
             posts: formattedPosts,

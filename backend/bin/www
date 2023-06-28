@@ -31,6 +31,8 @@ io.on("connection", (socket) => {
   
   serverLog(socket.id);
 
+  socket.emit("connected");
+
   socket.on("test", (message) => {
     serverLog(message);
     io.emit("test response", message);

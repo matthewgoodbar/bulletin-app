@@ -8,7 +8,7 @@ import { partialTimestamp } from "../../utils/date";
 const Posts = () => {
 
     const posts = useSelector(state => Object.values(state.posts).reverse());
-    // const [connectionEstablished, setConnectionEstablished] = useState(false);
+    const [connected, setConnected] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -18,7 +18,10 @@ const Posts = () => {
     useEffect(() => {
 
         socket.connect();
-        console.log("connected");
+
+        function connectionEstablished() {
+            setConnected(true);
+        }
 
         function pullNewPost(postId) {
             dispatch(fetchPost(postId));
@@ -28,14 +31,16 @@ const Posts = () => {
             console.log(message);
         };
 
+        socket.on("connected", connectionEstablished);
         socket.on("pull new post", pullNewPost);
         socket.on("test response", testResponse);
 
         return () => {
+            socket.off("connected", connectionEstablished);
             socket.off("pull new post", pullNewPost);
             socket.off("test response", testResponse);
             socket.disconnect();
-            console.log("disconnected");
+            setConnected(false);
         };
     }, []);
 
@@ -52,29 +57,37 @@ const Posts = () => {
     return (
         <>
             <div className="full-page-content">
-                <div id="posts-box-preamble">
-                    <Link to="/">Back to Homepage</Link>
-                    <form onSubmit={onTestButton}>
-                        <input type="submit" 
-                            value="Here!"
-                        />
-                    </form>
-                </div>
-                <div id="posts-box">
-                    <ul>
-                        {posts &&
-                        posts.map((post) => 
-                            <li className="single-post" key={post.id}>
-                                <ul>
-                                    <li>{post.id}</li>
-                                    <li>{post.title}</li>
-                                    <li>{post.body}</li>
-                                    <li>{partialTimestamp(post.createdAt)}</li>
-                                </ul>
-                            </li>
-                        )}
-                    </ul>
-                </div>
+                {connected &&
+                <>
+                    <div id="posts-box-preamble">
+                        <Link to="/">Back to Homepage</Link>
+                        <form onSubmit={onTestButton}>
+                            <input type="submit" 
+                                value="Here!"
+                            />
+                        </form>
+                    </div>
+                    <div id="posts-box">
+                        <ul>
+                            {posts &&
+                            posts.map((post) => 
+                                <li className="single-post" key={post.id}>
+                                    <ul>
+                                        <li>ID: {post.id}</li>
+                                        <li>Posted by: {post.author.username}</li>
+                                        <li>{post.title}</li>
+                                        <li>{post.body}</li>
+                                        <li>{partialTimestamp(post.createdAt)}</li>
+                                    </ul>
+                                </li>
+                            )}
+                        </ul>
+                    </div>
+                </>
+                }
+                {!connected &&
+                <p>Connecting...</p>
+                }
             </div>
         </>
     );
