@@ -49,27 +49,24 @@ const Posts = () => {
 
     return (
         <>
-            <div className="full-page-content">
-                {connected &&
-                <>
-                    <div id="posts-box-preamble">
-                        <Link to="/">Back to Homepage</Link>
-                        <button onClick={onTestButton} disabled={!currentUser} >Here!</button>
-                    </div>
-                    <div id="posts-box">
-                        <ul>
-                            {posts &&
-                            posts.map((post) => 
-                                <PostPreview key={post.id} post={post} />
-                            )}
-                        </ul>
-                    </div>
-                </>
-                }
-                {!connected &&
-                <p>Connecting...</p>
-                }
+            <div id="posts-box-preamble">
+                <button onClick={onTestButton} disabled={!currentUser || !connected} >Here!</button>
             </div>
+            {connected &&
+            <div id="posts-list">
+                <ul>
+                    {posts &&
+                    posts.map((post) => 
+                        <PostPreview key={post.id} post={post} />
+                    )}
+                </ul>
+            </div>
+            }
+            {!connected &&
+            <p id="connecting-message" className="specific-page-content">
+                Connecting...
+            </p>
+            }
         </>
     );
 };
