@@ -51,11 +51,11 @@ const Login = () => {
     }
 
     return (
-        <>
-            <h1>LOG IN</h1>
-            <form onSubmit={handleSubmit}>
+        <div className="specific-page-content session-box">
+            <h2 className="session-header-text">LOG IN</h2>
+            <form onSubmit={handleSubmit} className="session-form">
                 <div>{errors?.username}</div>
-                <label> Username
+                <label> Username: <br />
                     <input type="text" 
                         value={username}
                         onChange={update('username')}
@@ -63,22 +63,25 @@ const Login = () => {
                     />
                 </label>
                 <div>{errors?.password}</div>
-                <label> Password
+                <label> Password: <br />
                     <input type="password"
                         value={password}
                         onChange={update('password')}
                         placeholder="Password"
                     />
                 </label>
+                <br />
                 <input type="submit" 
                     value="Log In"
                     disabled={!username || !password}
                 />
             </form>
-            <button onClick={handleLeibniz}>Login as Leibniz</button>
-            <button onClick={handleNewton}>Login as Newton</button>
-            <Link to='/'>Back to homepage</Link>
-        </>
+            <p>Or...</p>
+            <div id="demo-logins">
+                <button onClick={handleLeibniz}>Login as Leibniz</button>
+                <button onClick={handleNewton}>Login as Newton</button>
+            </div>
+        </div>
     );
 };
 

@@ -52,39 +52,39 @@ const Signup = () => {
     }
     
     return (
-        <>
-            <h1>SIGN UP</h1>
-            <form onSubmit={handleSubmit}>
-                <div>{errors?.username}</div>
-                <label> Username
+        <div className="specific-page-content session-box">
+            <h2 className="session-header-text">SIGN UP</h2>
+            <form onSubmit={handleSubmit} className="session-form">
+                <div>{errors?.username}</div> <br />
+                <label> Username: <br />
                     <input type="text" 
                         value={username}
                         onChange={update('username')}
                         placeholder="Username"
                     />
                 </label>
-                <div>{errors?.password}</div>
-                <label> Password
+                <div>{errors?.password}</div> <br />
+                <label> Password: <br />
                     <input type="password"
                         value={password}
                         onChange={update('password')}
                         placeholder="Password"
                     />
                 </label>
-                <label> Confirm Password
+                <label> Confirm Password: <br />
                     <input type="password"
                         value={password2}
                         onChange={update('password2')}
                         placeholder="Confirm Password"
                     />
                 </label>
+                <br />
                 <input type="submit" 
                     value="Log In"
                     disabled={!username || !password || password !== password2}
                 />
             </form>
-            <Link to='/'>Back to homepage</Link>
-        </>
+        </div>
     );
 };
 

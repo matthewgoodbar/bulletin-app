@@ -10,7 +10,11 @@ html {
 }
 
 h1 {
-  font-size: 32px;
+  font-size: xx-large;
+}
+
+h2 {
+  font-size: x-large;
 }
 
 .full-page-content {
@@ -35,4 +39,23 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 1vh;
+}
+
+.session-header-text {
+  margin-top: 4vh;
+}
+
+.session-box {
+  background-color: var(--theme-1-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2vh;
+}
+
+.session-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

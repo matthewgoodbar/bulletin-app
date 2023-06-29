@@ -13,6 +13,7 @@
 }
 
 #connecting-message {
+    background-color: var(--theme-1-light);
     display: flex;
     justify-content: center;
     align-items: center;

@@ -20,15 +20,11 @@ const Goodbye = () => {
     }
     
     return (
-        <>
-            <h1>LOG OUT?</h1>
-            <form onSubmit={handleLogout}>
-                <input type="submit"
-                    value="Yes, log me out"
-                />
-            </form>
-            <p><Link to='/'>No! Take me home.</Link></p>
-        </>
+        <div className="specific-page-content session-box">
+            <h2 className="session-header-text">LOG OUT?</h2>
+            <button onClick={handleLogout}>Yes, log me out.</button>
+            <Link to="/">No! Take me home!</Link>
+        </div>
     );
 };
 
