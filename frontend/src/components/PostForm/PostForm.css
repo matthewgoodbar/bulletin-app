@@ -1,0 +1,9 @@
+
+.posts-form-closed {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.posts-form-open {
+
+}

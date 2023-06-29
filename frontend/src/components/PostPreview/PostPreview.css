@@ -10,7 +10,7 @@
     border-bottom: 1px solid black;
     background-color: var(--theme-1-light);
     animation-name: new-post;
-    animation-duration: 2s;
+    animation-duration: 1s;
 }
 
 @keyframes new-post {

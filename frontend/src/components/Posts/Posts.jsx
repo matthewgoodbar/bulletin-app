@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createPost, fetchPost, fetchPosts, addPost } from "../../store/posts";
 import PostPreview from "../PostPreview";
+import PostForm from "../PostForm";
 import socket from "../../utils/socket";
 
 const Posts = () => {
@@ -49,9 +50,10 @@ const Posts = () => {
 
     return (
         <>
-            <div id="posts-box-preamble">
+            {/* <div id="posts-box-preamble">
                 <button onClick={onTestButton} disabled={!currentUser || !connected} >Here!</button>
-            </div>
+            </div> */}
+            <PostForm />
             {connected &&
             <div id="posts-list">
                 <ul>
