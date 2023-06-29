@@ -9,6 +9,7 @@ import { AuthRoute, ProtectedRoute } from './components/Routes/Routes';
 
 import HomePage from './components/HomePage';
 import Navbar from './components/Navbar';
+import ScrollBanner from './components/ScrollBanner';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Goodbye from './components/Goodbye';
@@ -30,9 +31,10 @@ function App() {
   return loaded && (
     <div className="full-page-content">
       <div id="page-header">
-        <h1>WELCOME TO MY PAGE</h1>
+        <h1>HOPNET.ORG</h1>
       </div>
       <Navbar />
+      <ScrollBanner />
       <Routes>
         <Route exact path="/" element={<Posts />} />
         <Route exact path="/login" element={<Login />} />
