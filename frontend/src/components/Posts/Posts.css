@@ -1,15 +1,25 @@
-#posts-list {
-    box-sizing: border-box;
+#posts-box {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: hidden;
     border: 1px solid black;
-    scroll-behavior: smooth;
-    overflow-y: scroll;
 }
 
-#posts-box-preamble {
-    padding: 10px;
-    border: 1px solid black;
+#posts-header {
+    background-color: var(--theme-1-light);
+    border-bottom: 1px solid black;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+
+#posts-list {
+    scroll-behavior: smooth;
+    overflow-y: scroll;
 }
 
 #connecting-message {

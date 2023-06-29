@@ -8,23 +8,23 @@ const PostForm = () => {
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.session.currentUser);
     const errors = useSelector(state => state.errors.posts);
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
 
     useEffect(() => {
-        setOpen(false);
+        // setOpen(false);
         dispatch(clearPostErrors());
     }, [dispatch]);
 
-    const openForm = e => {
-        setOpen(true);
-    };
+    // const openForm = e => {
+    //     setOpen(true);
+    // };
 
-    const closeForm = e => {
-        setOpen(false);
-        dispatch(clearPostErrors());
-    };
+    // const closeForm = e => {
+    //     formToggleCallback(false);
+    //     dispatch(clearPostErrors());
+    // };
 
     const updateField = field => {
         let setField;
@@ -62,7 +62,7 @@ const PostForm = () => {
 
     return (
         <>
-        {open &&
+        {/* {open && */}
         <div className="post-form-open">
             <div className="post-form-info">
                 <h2>New Post {'>>'}</h2>
@@ -88,7 +88,6 @@ const PostForm = () => {
                     </label>
                 </div>
                 <div className="post-form-buttons">
-                    <button onClick={closeForm}>Close Form</button>
                     <input 
                     type="submit" 
                     value="Submit Post"
@@ -97,12 +96,12 @@ const PostForm = () => {
                 </div>
             </form>
         </div>
-        }
-        {!open &&
+        {/* } */}
+        {/* {!open &&
         <div className="post-form-closed">
             <button onClick={openForm}>Create a New Post</button>
         </div>
-        }
+        } */}
         </>
     );
 };

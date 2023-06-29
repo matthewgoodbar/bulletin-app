@@ -19,7 +19,9 @@ const Navbar = () => {
                 </>
                 }
                 {currentUser &&
+                <>
                 <Link to="/goodbye" className="nav-button">Log Out</Link>
+                </>
                 }
             </div>
         </nav>
