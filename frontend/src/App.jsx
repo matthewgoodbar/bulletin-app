@@ -31,8 +31,8 @@ function App() {
     <div className="full-page-content">
       <div id="page-header">
         <h1>WELCOME TO MY PAGE</h1>
-        <Navbar />
       </div>
+      <Navbar />
       <Routes>
         <Route exact path="/" element={<Posts />} />
         <Route exact path="/login" element={<Login />} />

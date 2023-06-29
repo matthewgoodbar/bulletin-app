@@ -7,16 +7,21 @@ const Navbar = () => {
     
     return (
         <nav id="navbar">
-            <Link to="/">Home</Link>
-            {!currentUser &&
-            <>
-            <Link to="/signup">Sign Up</Link>
-            <Link to="/login">Log In</Link>
-            </>
-            }
-            {currentUser &&
-            <Link to="/goodbye">Log Out</Link>
-            }
+            <div className="nav-button-group">
+                <Link to="/" className="nav-button">Home</Link>
+                <Link to="/about" className="nav-button">About</Link>
+            </div>
+            <div className="nav-button-group">
+                {!currentUser &&
+                <>
+                <Link to="/signup" className="nav-button">Sign Up</Link>
+                <Link to="/login" className="nav-button">Log In</Link>
+                </>
+                }
+                {currentUser &&
+                <Link to="/goodbye" className="nav-button">Log Out</Link>
+                }
+            </div>
         </nav>
     );
 };
