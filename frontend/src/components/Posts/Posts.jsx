@@ -56,7 +56,7 @@ const Posts = () => {
             {connected &&
             <div id="posts-box">
                 <div id="posts-header">
-                    <button>Nothing!</button>
+                    <h2>ALL POSTS</h2>
                     {(currentUser && postFormOpen) &&
                     <button onClick={e => setPostFormOpen(false)}>Close Post Form</button>
                     }

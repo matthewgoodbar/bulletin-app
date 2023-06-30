@@ -33,8 +33,8 @@ function App() {
       <div id="page-header">
         <h1>HOPNET.ORG</h1>
       </div>
-      <Navbar />
       <ScrollBanner />
+      <Navbar />
       <Routes>
         <Route exact path="/" element={<Posts />} />
         <Route exact path="/login" element={<Login />} />

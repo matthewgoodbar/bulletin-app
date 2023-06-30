@@ -10,6 +10,7 @@ const Navbar = () => {
             <div className="nav-button-group">
                 <Link to="/" className="nav-button">Home</Link>
                 <Link to="/about" className="nav-button">About</Link>
+                <Link to="/rules" className="nav-button">Rules</Link>
             </div>
             <div className="nav-button-group">
                 {!currentUser &&

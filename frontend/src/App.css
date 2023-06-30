@@ -6,7 +6,9 @@ html {
 
 :root {
   --theme-1-light: rgb(240, 224, 214);
-  --theme-1-dark: rgb(217, 191, 183);
+  /* --theme-1-dark: rgb(217, 191, 183); */
+  --theme-1-dark: rgb(219, 163, 146);
+  --global-padding: 8px;
 }
 
 h1 {
@@ -20,7 +22,7 @@ h2 {
 .full-page-content {
   display: flex;
   flex-direction: column;
-  gap: 1vh;
+  gap: var(--global-padding);
   box-sizing: border-box;
   height: 90vh;
   width: 90vw;
@@ -28,6 +30,7 @@ h2 {
   margin-bottom: 5vh;
   margin-left: 5vw;
   margin-right: 5vw;
+  overflow: hidden;
 }
 
 .specific-page-content {

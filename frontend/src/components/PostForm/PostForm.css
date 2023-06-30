@@ -9,7 +9,7 @@
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    gap: 1vw;
+    gap: var(--global-padding);
 }
 
 .post-form-info {
@@ -47,4 +47,14 @@
     justify-content: space-evenly;
     align-items: center;
     flex: 1;
+}
+
+@media (max-width: 700px) {
+    .post-form-info {
+        display: none;
+    }
+
+    .post-form-input-boxes textarea {
+        width: 100%;
+    }
 }

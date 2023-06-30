@@ -3,10 +3,11 @@
     flex-direction: column;
     gap: 1vh;
     box-sizing: border-box;
-    padding-top: 1vh;
+    /* padding-top: 1vh;
     padding-bottom: 1vh;
     padding-left: 1vw;
-    padding-right: 1vw;
+    padding-right: 1vw; */
+    padding: var(--global-padding);
     border-bottom: 1px solid black;
     background-color: var(--theme-1-light);
     animation-name: new-post;
