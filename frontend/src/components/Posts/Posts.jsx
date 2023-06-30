@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createPost, fetchPost, fetchPosts, addPost } from "../../store/posts";
@@ -13,6 +13,9 @@ const Posts = () => {
     const [connected, setConnected] = useState(false);
     const [postFormOpen, setPostFormOpen] = useState(false);
     const dispatch = useDispatch();
+    const scrollRef = useRef(null);
+
+    const scrollToTop = () => scrollRef.current.scrollTo({ top: 0 });
 
     //Socket events
     function connectionEstablished() {
@@ -40,13 +43,26 @@ const Posts = () => {
 
     //Connect on mount, disconnect on dismount
     useEffect(() => {
-
         handleConnect();
-
-        return () => {
-            handleDisconnect();
-        };
+        return () => handleDisconnect();
     }, [dispatch]);
+
+    let postButton;
+    if (currentUser) {
+        if (postFormOpen) {
+            postButton = (
+                <button onClick={e => setPostFormOpen(false)}>Close Post Form</button>
+            );
+        } else {
+            postButton = (
+                <button onClick={e => setPostFormOpen(true)}>Create New Post</button>
+            );
+        }
+    } else {
+        postButton = (
+            <p>You must be <Link to="/login">logged in</Link> to post!</p>
+        );
+    }
     
     return (
         <>
@@ -57,17 +73,10 @@ const Posts = () => {
             <div id="posts-box">
                 <div id="posts-header">
                     <h2>ALL POSTS</h2>
-                    {(currentUser && postFormOpen) &&
-                    <button onClick={e => setPostFormOpen(false)}>Close Post Form</button>
-                    }
-                    {(currentUser && !postFormOpen) &&
-                    <button onClick={e => setPostFormOpen(true)}>Create New Post</button>
-                    }
-                    {!currentUser &&
-                    <p>You must be <Link to="/login">logged in</Link> to post!</p>
-                    }
+                    <button onClick={scrollToTop}>Back to Top</button>
+                    {postButton}
                 </div>
-                <div id="posts-list">
+                <div id="posts-list" ref={scrollRef}>
                     <ul>
                         {posts &&
                         posts.map((post) => 
