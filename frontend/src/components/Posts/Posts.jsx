@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { createPost, fetchPost, fetchPosts, addPost } from "../../store/posts";
+import { createPost, fetchPost, fetchPosts, addPost, clearPosts } from "../../store/posts";
 import PostPreview from "../PostPreview";
 import PostForm from "../PostForm";
 import socket from "../../utils/socket";
@@ -20,6 +20,7 @@ const Posts = () => {
     //Socket events
     function connectionEstablished() {
         setConnected(true);
+        dispatch(clearPosts());
         dispatch(fetchPosts());
     };
 

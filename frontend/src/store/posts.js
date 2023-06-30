@@ -28,7 +28,7 @@ const removePost = postId => ({
     postId,
 });
 
-const clearPosts = () => ({
+export const clearPosts = () => ({
     type: CLEAR_POSTS,
 });
 
@@ -90,6 +90,7 @@ export const createPost = data => async dispatch => {
         });
         const { post } = await res.json();
         // return dispatch(addPost(post));
+        return dispatch(clearPostErrors());
     } catch(err) {
         const errBody = await err.json();
         if (errBody.statusCode === 400) {
@@ -105,7 +106,6 @@ export const postErrorsReducer = (state = nullErrors, action) => {
     switch (action.type) {
         case RECEIVE_POST_ERRORS:
             return action.errors;
-        case ADD_POST:
         case CLEAR_POST_ERRORS:
             return nullErrors;
         default:

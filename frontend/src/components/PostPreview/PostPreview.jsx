@@ -10,7 +10,7 @@ const PostPreview = ({ post }) => {
             </div>
             <div className="post-preview-content">
                 <div className="post-preview-header">
-                    <p>ID: {post.id}</p>
+                    <p>Post ID: {post.id}</p>
                     <p>{partialTimestamp(post.createdAt)}</p>
                 </div>
                 <p className="post-title">{post.title}</p>
