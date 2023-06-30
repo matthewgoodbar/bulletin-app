@@ -88,6 +88,7 @@ const PostForm = () => {
                     </label>
                 </div>
                 <div className="post-form-buttons">
+                    <h2 className="mobile-post-header">New Post</h2>
                     <input 
                     type="submit" 
                     value="Submit Post"
