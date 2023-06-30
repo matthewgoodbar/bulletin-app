@@ -68,7 +68,7 @@ const Posts = () => {
     return (
         <>
             {postFormOpen &&
-            <PostForm />
+            <PostForm setPostFormOpen={setPostFormOpen} />
             }
             {connected &&
             <div id="posts-box">

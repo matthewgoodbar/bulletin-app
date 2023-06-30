@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { createPost, clearPostErrors } from "../../store/posts";
 
-const PostForm = () => {
+const PostForm = ({ setPostFormOpen }) => {
 
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.session.currentUser);
@@ -21,10 +21,9 @@ const PostForm = () => {
     //     setOpen(true);
     // };
 
-    // const closeForm = e => {
-    //     formToggleCallback(false);
-    //     dispatch(clearPostErrors());
-    // };
+    const closeForm = e => {
+        setPostFormOpen(false);
+    };
 
     const updateField = field => {
         let setField;
@@ -69,6 +68,7 @@ const PostForm = () => {
                 <p>Please read the rules before posting!</p>
             </div>
             <form onSubmit={handleSubmit} className="post-form">
+                <button className="close-form-x" onClick={closeForm}>X</button>
                 <div className="post-form-input-boxes">
                     <label> Title {errors?.title}<br />
                         <input 

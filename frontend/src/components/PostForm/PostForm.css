@@ -33,6 +33,7 @@
     justify-content: space-evenly;
     padding: var(--global-padding);
     gap: var(--global-padding);
+    position: relative;
 }
 
 .post-form-input-boxes {
@@ -47,6 +48,12 @@
     justify-content: space-evenly;
     align-items: center;
     flex: 1;
+}
+
+.close-form-x {
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 .mobile-post-header {
