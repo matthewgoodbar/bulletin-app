@@ -86,13 +86,13 @@ const PostForm = ({ setPostFormOpen }) => {
                         onChange={updateField("body")}
                         ></textarea>
                     </label>
-                </div>
-                <div className="post-form-buttons">
-                    <input 
-                    type="submit" 
-                    value="Submit Post"
-                    disabled={!currentUser}
-                    />
+                    <div className="post-form-buttons">
+                        <input 
+                        type="submit" 
+                        value="Submit Post"
+                        disabled={!currentUser}
+                        />
+                    </div>
                 </div>
             </form>
         </div>
