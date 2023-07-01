@@ -20,21 +20,16 @@ const PostPreview = ({ post }) => {
                 {userInfo}
             </div>
             <div className="post-preview-content">
-                <div className="post-preview-header"> 
-                    <p>Post ID: {post.id}</p>
-                    <p>{partialTimestamp(post.createdAt)}</p>
-                </div>
                 <div className="post-preview-header-m">
                     <span>
                         {userInfo}
                     </span>
-                    <div>
-                        <p>{partialTimestamp(post.createdAt)}</p>
-                        <p>Post ID: {post.id}</p>
-                    </div>
+                    <p>Post ID: {post.id}</p>
                 </div>
+                <p className="post-id">Post ID: {post.id}</p>
                 <p className="post-title">{post.title}</p>
                 <p className="post-body">{post.body}</p>
+                <p className="post-date">{partialTimestamp(post.createdAt)}</p>
             </div>
         </li>
     )

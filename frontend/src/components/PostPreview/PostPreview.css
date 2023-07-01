@@ -35,17 +35,20 @@
     to {background-color: var(--theme-1-light);}
 }
 
-.post-preview-header {
-    display: flex;
-    justify-content: space-between;
-}
-
 .post-preview-header-m {
     display: none;
 }
 
 .post-title {
     font-weight: bold;
+}
+
+.post-date {
+    text-align: right;
+}
+
+.post-id {
+    text-align: right;
 }
 
 .post-preview-profile-picture {
@@ -61,13 +64,14 @@
         display: none;
     }
 
-    .post-preview-header {
+    .post-id {
         display: none;
     }
 
     .post-preview-header-m {
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 
     .post-preview-header-m span {
@@ -75,15 +79,5 @@
         justify-content: flex-start;
         align-items: center;
         gap: var(--global-padding);
-    }
-
-    .post-preview-header-m div {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-    }
-
-    .post-preview-header-m div p {
-        text-align: right;
     }
 }
