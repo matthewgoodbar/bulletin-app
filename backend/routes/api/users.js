@@ -18,12 +18,39 @@ router.get('/', async (req, res, next) => {
       select: {
         id: true,
         username: true,
-        createdAt: true
+        createdAt: true,
+        updatedAt: true,
+        icon: true,
+        bio: true,
       },
     });
     const formattedUsers = formatArray(users);
     res.json({
       users: formattedUsers,
+    });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+      select: {
+        id: true,
+        username: true,
+        createdAt: true,
+        updatedAt: true,
+        icon: true,
+        bio: true,
+      },
+    });
+    res.json({
+      user,
     });
   } catch (err) {
     return next(err);
@@ -40,7 +67,9 @@ router.get('/current', restoreUser, (req, res) => {
     user: {
       id: req.user.id,
       username: req.user.username,
+      role: req.user.role,
       createdAt: req.user.createdAt,
+      updatedAt: req.user.updatedAt,
     },
   });
 });

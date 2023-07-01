@@ -12,12 +12,19 @@ model Post {
   authorId  Int
   title     String    @db.VarChar(40)
   body      String
+  board     Board     @default(A)
   createdAt DateTime  @default(now()) @db.Timestamp(6)
   updatedAt DateTime  @updatedAt
-  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  author    User      @relation("WrittenPosts", fields: [authorId], references: [id], onDelete: Cascade)
   replies   Reply[]
+  savedBy   User[]    @relation("SavedPosts")
+}
 
-  // @@index([userId], map: "posts_userId_index")
+enum Board {
+  A
+  B
+  C
+  D
 }
 
 model Reply {
@@ -29,16 +36,23 @@ model Reply {
   updatedAt DateTime @updatedAt
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-
-  // @@index([postId], map: "replies_postId_index")
-  // @@index([userId], map: "replies_userId_index")
 }
 
 model User {
   id             Int       @id @default(autoincrement())
   username       String    @unique @db.VarChar(20)
   hashedPassword String
+  bio            String?
+  icon           String?
+  role           Role      @default(USER)
   createdAt      DateTime  @default(now()) @db.Timestamp(6)
-  posts          Post[]
+  updatedAt      DateTime  @updatedAt
+  posts          Post[]    @relation("WrittenPosts")
   replies        Reply[]
+  savedPosts     Post[]    @relation("SavedPosts")
+}
+
+enum Role {
+  USER
+  ADMIN
 }

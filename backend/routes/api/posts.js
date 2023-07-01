@@ -64,6 +64,38 @@ router.get('/', async (req, res, next) => {
                     },
                 },
             },
+            orderBy: {
+                updatedAt: 'desc',
+            },
+            take: 100,
+        });
+        const formattedPosts = formatArray(queriedPosts);
+        res.json({
+            posts: formattedPosts,
+        });
+    } catch (err) {
+        return next(err);
+    }
+});
+
+router.get('/board/:boardId', async (req, res, next) => {
+    try {
+        const { boardId } = req.params;
+        const queriedPosts = await prisma.post.findMany({
+            where: {
+                board: boardId,
+            },
+            include: {
+                author: {
+                    select: {
+                        username: true,
+                    },
+                },
+            },
+            orderBy: {
+                updatedAt: 'desc',
+            },
+            take: 100,
         });
         const formattedPosts = formatArray(queriedPosts);
         res.json({
