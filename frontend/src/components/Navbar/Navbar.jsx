@@ -4,6 +4,23 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
 
     const currentUser = useSelector(state => state.session.currentUser);
+
+    let sessionLinks;
+    if (currentUser) {
+        sessionLinks = (
+            <div className="nav-button-group">
+                <Link to={`/users/${currentUser.id}`}>Profile</Link>
+                <Link to="/goodbye" className="nav-button">Log Out</Link>
+            </div>
+        );
+    } else {
+        sessionLinks = (
+            <div className="nav-button-group">
+                <Link to="/signup" className="nav-button">Sign Up</Link>
+                <Link to="/login" className="nav-button">Log In</Link>
+            </div>
+        );
+    }
     
     return (
         <nav id="navbar">
@@ -12,19 +29,7 @@ const Navbar = () => {
                 <Link to="/about" className="nav-button">About</Link>
                 <Link to="/rules" className="nav-button">Rules</Link>
             </div>
-            <div className="nav-button-group">
-                {!currentUser &&
-                <>
-                <Link to="/signup" className="nav-button">Sign Up</Link>
-                <Link to="/login" className="nav-button">Log In</Link>
-                </>
-                }
-                {currentUser &&
-                <>
-                <Link to="/goodbye" className="nav-button">Log Out</Link>
-                </>
-                }
-            </div>
+            {sessionLinks}
         </nav>
     );
 };
