@@ -56,6 +56,19 @@ export const fetchPosts = () => async dispatch => {
     }
 };
 
+export const fetchBoard = boardId => async dispatch => {
+    try {
+        const res = await jwtFetch(`/api/posts/board/${boardId}`);
+        const { posts } = await res.json();
+        return dispatch(addPosts(posts));
+    } catch (err) {
+        const errBody = await err.json();
+        if (errBody.statusCode === 400) {
+            return dispatch(receivePostErrors(errBody.errors));
+        }
+    }
+};
+
 export const fetchPost = postId => async dispatch => {
     try {
         const res = await jwtFetch(`/api/posts/${postId}`);

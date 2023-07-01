@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Prisma, PrismaClient } = require('@prisma/client');
+const { Board } = require('@prisma/client');
 const validatePostInput = require('../../validations/posts');
 const { requireUser } = require('../../config/passport');
 const { formatArray } = require('../../utils/format');
@@ -80,7 +81,10 @@ router.get('/', async (req, res, next) => {
 
 router.get('/board/:boardId', async (req, res, next) => {
     try {
-        const { boardId } = req.params;
+        let { boardId } = req.params;
+        if (!Board[boardId]) {
+            boardId = "A";
+        }
         const queriedPosts = await prisma.post.findMany({
             where: {
                 board: boardId,

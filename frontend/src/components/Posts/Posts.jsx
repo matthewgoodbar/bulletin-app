@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { createPost, fetchPost, fetchPosts, addPost, clearPosts } from "../../store/posts";
+import { fetchPosts, addPost, clearPosts, fetchBoard } from "../../store/posts";
 import PostPreview from "../PostPreview";
 import PostForm from "../PostForm";
 import socket from "../../utils/socket";
 
-const Posts = () => {
+const Posts = ({ defaultBoard = "A" }) => {
 
     const posts = useSelector(state => Object.values(state.posts).reverse());
     const currentUser = useSelector(state => state.session.currentUser);
     const [connected, setConnected] = useState(false);
     const [postFormOpen, setPostFormOpen] = useState(false);
+    const [board, setBoard] = useState(defaultBoard);
     const dispatch = useDispatch();
     const scrollRef = useRef(null);
 
@@ -21,7 +22,7 @@ const Posts = () => {
     function connectionEstablished() {
         setConnected(true);
         dispatch(clearPosts());
-        dispatch(fetchPosts());
+        dispatch(fetchBoard(board));
     };
 
     function pullNewPost({ post }) {
@@ -46,7 +47,11 @@ const Posts = () => {
     useEffect(() => {
         handleConnect();
         return () => handleDisconnect();
-    }, [dispatch]);
+    }, [dispatch, board]);
+
+    useEffect(() => {
+        setBoard(defaultBoard);
+    }, [defaultBoard]);
 
     let postButton;
     if (currentUser) {
@@ -80,7 +85,7 @@ const Posts = () => {
             }
             <div id="posts-box">
                 <div id="posts-header">
-                    <h2>ALL POSTS</h2>
+                    <h2>BOARD {board}</h2>
                     <button onClick={scrollToTop}>Back to Top</button>
                     {postButton}
                 </div>

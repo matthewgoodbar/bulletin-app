@@ -33,6 +33,23 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.get('/current', restoreUser, (req, res) => {
+  if (!isProduction) {
+    csrfToken = req.csrfToken();
+    res.cookie("CSRF-TOKEN", csrfToken);
+  }
+  if (!req.user) return res.json({ user: null });
+  res.json({
+    user: {
+      id: req.user.id,
+      username: req.user.username,
+      role: req.user.role,
+      createdAt: req.user.createdAt,
+      updatedAt: req.user.updatedAt,
+    },
+  });
+});
+
 router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -55,23 +72,6 @@ router.get('/:id', async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
-});
-
-router.get('/current', restoreUser, (req, res) => {
-  if (!isProduction) {
-    csrfToken = req.csrfToken();
-    res.cookie("CSRF-TOKEN", csrfToken);
-  }
-  if (!req.user) return res.json({ user: null });
-  res.json({
-    user: {
-      id: req.user.id,
-      username: req.user.username,
-      role: req.user.role,
-      createdAt: req.user.createdAt,
-      updatedAt: req.user.updatedAt,
-    },
-  });
 });
 
 router.post('/register', validateRegisterInput, async (req, res, next) => {
