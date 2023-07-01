@@ -113,13 +113,14 @@ router.get('/board/:boardId', async (req, res, next) => {
 router.post('/', requireUser, validatePostInput, async (req, res, next) => {
     try {
         socket.connect();
-        const { title, body } = req.body;
+        const { title, body, board } = req.body;
         const { id } = req.user;
         const post = await prisma.post.create({
             data: {
                 title: title,
                 body: body,
                 authorId: id,
+                board: board,
             },
         });
         const postToSendBack = await prisma.post.findUnique({

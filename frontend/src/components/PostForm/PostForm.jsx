@@ -8,18 +8,14 @@ const PostForm = ({ setPostFormOpen }) => {
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.session.currentUser);
     const errors = useSelector(state => state.errors.posts);
-    // const [open, setOpen] = useState(false);
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
+    const [boardRadio, setBoardRadio] = useState("A");
 
     useEffect(() => {
-        // setOpen(false);
         dispatch(clearPostErrors());
     }, [dispatch]);
 
-    // const openForm = e => {
-    //     setOpen(true);
-    // };
 
     const closeForm = e => {
         setPostFormOpen(false);
@@ -40,12 +36,17 @@ const PostForm = ({ setPostFormOpen }) => {
         return e => setField(e.target.value);
     };
 
+    const handleRadioChange = e => {
+        setBoardRadio(e.target.value);
+    };
+
     const handleSubmit = e => {
         e.preventDefault();
+        console.log(boardRadio);
         dispatch(createPost({
-            authorId: currentUser.id,
             title,
             body,
+            board: boardRadio,
         }));
         setTitle("");
         setBody("");
@@ -86,6 +87,29 @@ const PostForm = ({ setPostFormOpen }) => {
                         onChange={updateField("body")}
                         ></textarea>
                     </label>
+                    <div>
+                        <p>Board </p>
+                        <label>
+                            <input  type="radio" name="board" value="A" 
+                            checked={boardRadio === "A"} onChange={handleRadioChange}/>
+                            A
+                        </label>
+                        <label>
+                            <input  type="radio" name="board" value="B" 
+                            checked={boardRadio === "B"} onChange={handleRadioChange}/>
+                            B
+                        </label>
+                        <label>
+                            <input  type="radio" name="board" value="C" 
+                            checked={boardRadio === "C"} onChange={handleRadioChange}/>
+                            C
+                        </label>
+                        <label>
+                            <input  type="radio" name="board" value="D" 
+                            checked={boardRadio === "D"} onChange={handleRadioChange}/>
+                            D
+                        </label>
+                    </div>
                     <div className="post-form-buttons">
                         <input 
                         type="submit" 
