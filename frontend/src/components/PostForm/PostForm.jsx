@@ -61,7 +61,6 @@ const PostForm = ({ setPostFormOpen }) => {
 
     return (
         <>
-        {/* {open && */}
         <div className="post-form-open">
             <div className="post-form-info">
                 <h2>New Post {'>>'}</h2>
@@ -69,6 +68,7 @@ const PostForm = ({ setPostFormOpen }) => {
             </div>
             <form onSubmit={handleSubmit} className="post-form">
                 <button className="close-form-x" onClick={closeForm}>X</button>
+                <h2>NEW POST</h2>
                 <div className="post-form-input-boxes">
                     <label> Title {errors?.title}<br />
                         <input 
@@ -88,7 +88,6 @@ const PostForm = ({ setPostFormOpen }) => {
                     </label>
                 </div>
                 <div className="post-form-buttons">
-                    <h2 className="mobile-post-header">New Post</h2>
                     <input 
                     type="submit" 
                     value="Submit Post"
@@ -97,12 +96,6 @@ const PostForm = ({ setPostFormOpen }) => {
                 </div>
             </form>
         </div>
-        {/* } */}
-        {/* {!open &&
-        <div className="post-form-closed">
-            <button onClick={openForm}>Create a New Post</button>
-        </div>
-        } */}
         </>
     );
 };

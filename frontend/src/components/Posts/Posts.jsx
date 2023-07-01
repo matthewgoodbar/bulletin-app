@@ -64,13 +64,20 @@ const Posts = () => {
             <p>You must be <Link to="/login">logged in</Link> to post!</p>
         );
     }
+
+    if (!connected) {
+        return (
+            <p id="connecting-message" className="specific-page-content">
+                Connecting...
+            </p>
+        );
+    }
     
     return (
-        <>
+        <div id="form-and-box">
             {postFormOpen &&
             <PostForm setPostFormOpen={setPostFormOpen} />
             }
-            {connected &&
             <div id="posts-box">
                 <div id="posts-header">
                     <h2>ALL POSTS</h2>
@@ -86,13 +93,7 @@ const Posts = () => {
                     </ul>
                 </div>
             </div>
-            }
-            {!connected &&
-            <p id="connecting-message" className="specific-page-content">
-                Connecting...
-            </p>
-            }
-        </>
+        </div>
     );
 };
 
