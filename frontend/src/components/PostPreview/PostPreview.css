@@ -40,6 +40,50 @@
     justify-content: space-between;
 }
 
+.post-preview-header-m {
+    display: none;
+}
+
 .post-title {
     font-weight: bold;
+}
+
+.post-preview-profile-picture {
+    width: 64px;
+}
+
+@media (max-width: 700px) {
+    .post-preview-profile-picture {
+        width: 32px;
+    }
+
+    .post-preview-profile {
+        display: none;
+    }
+
+    .post-preview-header {
+        display: none;
+    }
+
+    .post-preview-header-m {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .post-preview-header-m span {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: var(--global-padding);
+    }
+
+    .post-preview-header-m div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .post-preview-header-m div p {
+        text-align: right;
+    }
 }
