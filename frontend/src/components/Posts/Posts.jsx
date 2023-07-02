@@ -65,11 +65,18 @@ const Posts = ({ displayBoard = "A" }) => {
         dispatch(setLastBoard(displayBoard));
     }, [displayBoard]);
 
+    useEffect(() => {
+        if (!currentUser) {
+            setPostFormOpen(false);
+        }
+    }, [currentUser]);
+
     let postButton;
     if (currentUser) {
         if (postFormOpen) {
             postButton = (
-                <button onClick={e => setPostFormOpen(false)}>Close Post Form</button>
+                // <button onClick={e => setPostFormOpen(false)}>Close Post Form</button>
+                <></>
             );
         } else {
             postButton = (
@@ -93,13 +100,15 @@ const Posts = ({ displayBoard = "A" }) => {
     return (
         <div id="form-and-box">
             {postFormOpen &&
-            <PostForm setPostFormOpen={setPostFormOpen} currentBoard={board}/>
+            <PostForm setPostFormOpen={setPostFormOpen} setBoard={setBoard} currentBoard={board}/>
             }
             <div id="posts-box">
                 <div id="posts-header">
                     <h2>BOARD {board}</h2>
-                    <button onClick={scrollToTop}>Back to Top</button>
-                    {postButton}
+                    <div>
+                        <button onClick={scrollToTop}>Back to Top</button>
+                        {postButton}
+                    </div>
                 </div>
                 <div id="posts-list" ref={scrollRef}>
                     <ul>

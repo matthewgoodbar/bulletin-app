@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { createPost, clearPostErrors } from "../../store/posts";
 
-const PostForm = ({ setPostFormOpen, currentBoard }) => {
+const PostForm = ({ setPostFormOpen, setBoard, currentBoard }) => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const currentUser = useSelector(state => state.session.currentUser);
     const errors = useSelector(state => state.errors.posts);
     const [title, setTitle] = useState("");
@@ -51,10 +52,11 @@ const PostForm = ({ setPostFormOpen, currentBoard }) => {
             }));
             setTitle("");
             setBody("");
+            if (boardRadio != currentBoard) {
+                navigate(`/${boardRadio}`);
+            }
         } else {
-            return (
-                <Navigate to="/login"/>
-            );
+            navigate("/login");
         }
     };
 
