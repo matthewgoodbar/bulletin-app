@@ -29,12 +29,16 @@ var server = http.createServer(app);
 const io = new Server(server);
 io.on("connection", (socket) => {
   
-  serverLog("Connected: " + socket.id);
-
+  serverLog("Connecting: " + socket.id);
   socket.emit("connected");
+  
+  socket.on("join room", (room) => {
+    socket.join(room);
+    serverLog(socket.id + " joined room: " + room);
+  });
 
   socket.on("publish new post", (post) => {
-    io.emit("pull new post", post);
+    io.to(post.board).emit("pull new post", { post });
   });
 
   socket.on("disconnect", (reason) => {

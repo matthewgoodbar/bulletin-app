@@ -4,6 +4,7 @@ const RECEIVE_CURRENT_USER = "session/RECEIVE_CURRENT_USER";
 const RECEIVE_SESSION_ERRORS = "session/RECEIVE_SESSION_ERRORS";
 const CLEAR_SESSION_ERRORS = "session/CLEAR_SESSION_ERRORS";
 const RECEIVE_USER_LOGOUT = "session/RECEIVE_USER_LOGOUT";
+const SET_LAST_BOARD = "session/SET_LAST_BOARD";
 
 const receiveCurrentUser = currentUser => ({
     type: RECEIVE_CURRENT_USER,
@@ -21,6 +22,11 @@ export const clearSessionErrors = () => ({
 
 const logoutUser = () => ({
     type: RECEIVE_USER_LOGOUT,
+});
+
+export const setLastBoard = board => ({
+    type: SET_LAST_BOARD,
+    board,
 });
 
 // Thunk Actions
@@ -73,14 +79,18 @@ export const sessionErrorsReducer = (state = nullErrors, action) => {
 // Session Reducer
 const initialState = {
     currentUser: undefined,
+    lastBoard: "A",
 };
 
 const sessionReducer = (state = initialState, action) => {
+    // const newState = { ...state };
     switch (action.type) {
         case RECEIVE_CURRENT_USER:
-            return { currentUser: action.currentUser };
+            return { ...state, currentUser: action.currentUser };
         case RECEIVE_USER_LOGOUT:
-            return initialState;
+            return { ...state, currentUser: undefined };
+        case SET_LAST_BOARD:
+            return { ...state, lastBoard: action.board };
         default:
             return state;
     }

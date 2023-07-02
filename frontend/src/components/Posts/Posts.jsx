@@ -5,14 +5,15 @@ import { fetchPosts, addPost, clearPosts, fetchBoard } from "../../store/posts";
 import PostPreview from "../PostPreview";
 import PostForm from "../PostForm";
 import socket from "../../utils/socket";
+import { setLastBoard } from "../../store/session";
 
-const Posts = ({ defaultBoard = "A" }) => {
+const Posts = ({ displayBoard = "A" }) => {
 
     const posts = useSelector(state => Object.values(state.posts).reverse());
     const currentUser = useSelector(state => state.session.currentUser);
     const [connected, setConnected] = useState(false);
     const [postFormOpen, setPostFormOpen] = useState(false);
-    const [board, setBoard] = useState(defaultBoard);
+    const [board, setBoard] = useState(displayBoard);
     const dispatch = useDispatch();
     const scrollRef = useRef(null);
 
@@ -20,7 +21,9 @@ const Posts = ({ defaultBoard = "A" }) => {
 
     //Socket events
     function connectionEstablished() {
+        console.log("Connection established!");
         setConnected(true);
+        socket.emit("join room", board);
         dispatch(clearPosts());
         dispatch(fetchBoard(board));
     };
@@ -30,13 +33,15 @@ const Posts = ({ defaultBoard = "A" }) => {
     };
 
     //Connecting & Disconnecting
-    const handleConnect = e => {
+    const handleConnect = () => {
+        console.log("Connecting...");
         socket.connect();
         socket.on("connected", connectionEstablished);
         socket.on("pull new post", pullNewPost);
     };
 
-    const handleDisconnect = e => {
+    const handleDisconnect = () => {
+        console.log("Disconnecting...");
         socket.off("connected", connectionEstablished);
         socket.off("pull new post", pullNewPost);
         socket.disconnect();
@@ -50,8 +55,9 @@ const Posts = ({ defaultBoard = "A" }) => {
     }, [dispatch, board]);
 
     useEffect(() => {
-        setBoard(defaultBoard);
-    }, [defaultBoard]);
+        setBoard(displayBoard);
+        dispatch(setLastBoard(displayBoard));
+    }, [displayBoard]);
 
     let postButton;
     if (currentUser) {
@@ -81,7 +87,7 @@ const Posts = ({ defaultBoard = "A" }) => {
     return (
         <div id="form-and-box">
             {postFormOpen &&
-            <PostForm setPostFormOpen={setPostFormOpen} />
+            <PostForm setPostFormOpen={setPostFormOpen} currentBoard={board}/>
             }
             <div id="posts-box">
                 <div id="posts-header">

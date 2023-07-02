@@ -135,7 +135,7 @@ router.post('/', requireUser, validatePostInput, async (req, res, next) => {
                 },
             },
         });
-        socket.emit("publish new post", { post: postToSendBack });
+        socket.emit("publish new post", postToSendBack);
         res.json({
             post: post,
         });

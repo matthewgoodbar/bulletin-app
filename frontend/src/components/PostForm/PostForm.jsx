@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { createPost, clearPostErrors } from "../../store/posts";
 
-const PostForm = ({ setPostFormOpen }) => {
+const PostForm = ({ setPostFormOpen, currentBoard }) => {
 
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.session.currentUser);
     const errors = useSelector(state => state.errors.posts);
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
-    const [boardRadio, setBoardRadio] = useState("A");
+    const [boardRadio, setBoardRadio] = useState(currentBoard);
 
     useEffect(() => {
         dispatch(clearPostErrors());

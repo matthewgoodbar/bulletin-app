@@ -37,10 +37,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Posts />} />
-        <Route exact path="/A" element={<Posts defaultBoard={"A"} />} />
-        <Route exact path="/B" element={<Posts defaultBoard={"B"} />} />
-        <Route exact path="/C" element={<Posts defaultBoard={"C"} />} />
-        <Route exact path="/D" element={<Posts defaultBoard={"D"} />} />
+        <Route exact path="/A" element={<Posts displayBoard={"A"} />} />
+        <Route exact path="/B" element={<Posts displayBoard={"B"} />} />
+        <Route exact path="/C" element={<Posts displayBoard={"C"} />} />
+        <Route exact path="/D" element={<Posts displayBoard={"D"} />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/goodbye" element={<Goodbye />} />
