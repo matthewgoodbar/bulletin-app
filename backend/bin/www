@@ -29,12 +29,13 @@ var server = http.createServer(app);
 const io = new Server(server);
 io.on("connection", (socket) => {
   
-  serverLog("Connecting: " + socket.id);
+  // serverLog("Connecting: " + socket.id);
   socket.emit("connected");
   
   socket.on("join room", (room) => {
     socket.join(room);
     serverLog(socket.id + " joined room: " + room);
+    socket.emit("room joined");
   });
 
   socket.on("publish new post", (post) => {

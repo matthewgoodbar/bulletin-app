@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { createPost, clearPostErrors } from "../../store/posts";
 
 const PostForm = ({ setPostFormOpen, currentBoard }) => {
@@ -42,14 +42,20 @@ const PostForm = ({ setPostFormOpen, currentBoard }) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(boardRadio);
-        dispatch(createPost({
-            title,
-            body,
-            board: boardRadio,
-        }));
-        setTitle("");
-        setBody("");
+        if (currentUser) {
+            dispatch(createPost({
+                authorId: currentUser.id,
+                title,
+                body,
+                board: boardRadio,
+            }));
+            setTitle("");
+            setBody("");
+        } else {
+            return (
+                <Navigate to="/login"/>
+            );
+        }
     };
 
     if (!currentUser) {

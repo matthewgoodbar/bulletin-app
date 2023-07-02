@@ -22,8 +22,12 @@ const Posts = ({ displayBoard = "A" }) => {
     //Socket events
     function connectionEstablished() {
         console.log("Connection established!");
-        setConnected(true);
         socket.emit("join room", board);
+    };
+    
+    function roomJoined() {
+        console.log("Joined room: " + board);
+        setConnected(true);
         dispatch(clearPosts());
         dispatch(fetchBoard(board));
     };
@@ -37,12 +41,14 @@ const Posts = ({ displayBoard = "A" }) => {
         console.log("Connecting...");
         socket.connect();
         socket.on("connected", connectionEstablished);
+        socket.on("room joined", roomJoined);
         socket.on("pull new post", pullNewPost);
     };
 
     const handleDisconnect = () => {
         console.log("Disconnecting...");
         socket.off("connected", connectionEstablished);
+        socket.off("room joined", roomJoined);
         socket.off("pull new post", pullNewPost);
         socket.disconnect();
         setConnected(false);
