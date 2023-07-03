@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { fetchPosts, addPost, clearPosts, fetchBoard } from "../../store/posts";
+import { Link, useNavigate } from "react-router-dom";
+import { fetchPosts, addPost, clearPosts, fetchBoard, addOrSlide } from "../../store/posts";
 import PostPreview from "../PostPreview";
 import PostForm from "../PostForm";
 import socket from "../../utils/socket";
@@ -9,31 +9,35 @@ import { setLastBoard } from "../../store/session";
 
 const Posts = ({ displayBoard = "A" }) => {
 
-    const posts = useSelector(state => Object.values(state.posts).reverse());
+    const posts = useSelector(state => {
+        let postsArr = Object.values(state.posts);
+        return postsArr.sort((a,b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+    });
     const currentUser = useSelector(state => state.session.currentUser);
     const [connected, setConnected] = useState(false);
     const [postFormOpen, setPostFormOpen] = useState(false);
     const [board, setBoard] = useState(displayBoard);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const scrollRef = useRef(null);
 
     const scrollToTop = () => scrollRef.current.scrollTo({ top: 0 });
 
     //Socket events
-    function connectionEstablished() {
+    const connectionEstablished = () => {
         console.log("Connection established!");
         socket.emit("join room", board);
     };
     
-    function roomJoined() {
+    const roomJoined = () => {
         console.log("Joined room: " + board);
         setConnected(true);
         dispatch(clearPosts());
         dispatch(fetchBoard(board));
     };
 
-    function pullNewPost({ post }) {
-        dispatch(addPost(post));
+    const pullNewPost = ({ post }) => {
+        dispatch(addOrSlide(post));
     };
 
     //Connecting & Disconnecting
@@ -85,7 +89,8 @@ const Posts = ({ displayBoard = "A" }) => {
         }
     } else {
         postButton = (
-            <p>You must be <Link to="/login">logged in</Link> to post!</p>
+            // <p>You must be <Link to="/login">logged in</Link> to post!</p>
+            <button onClick={e => navigate("/login")}>Create New Post</button>
         );
     }
 

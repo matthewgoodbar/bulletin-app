@@ -4,6 +4,7 @@ const ADD_POST = 'posts/ADD_POST';
 const ADD_POSTS = 'posts/ADD_POSTS';
 // const ADD_USER_POSTS = 'posts/ADD_USER_POSTS';
 const REMOVE_POST = 'posts/REMOVE_POST';
+const ADD_OR_SLIDE = 'posts/ADD_OR_SLIDE';
 const CLEAR_POSTS = 'posts/CLEAR_POSTS';
 const RECEIVE_POST_ERRORS = 'posts/RECEIVE_POST_ERRORS';
 const CLEAR_POST_ERRORS = 'posts/CLEAR_POST_ERRORS';
@@ -23,10 +24,15 @@ const addPosts = posts => ({
 //     posts,
 // });
 
-const removePost = postId => ({
+export const removePost = postId => ({
     type: REMOVE_POST,
     postId,
 });
+
+export const addOrSlide = post => ({
+    type: ADD_OR_SLIDE,
+    post,
+})
 
 export const clearPosts = () => ({
     type: CLEAR_POSTS,
@@ -136,6 +142,14 @@ const postsReducer = (state = {}, action) => {
             return { ...state, ...action.posts };
         case REMOVE_POST:
             delete newState[action.postId];
+            return newState;
+        case ADD_OR_SLIDE:
+            newState[action.post.id] = action.post;
+            const arr = Object.values(state).sort((a,b) => new Date(a.updatedAt) - new Date(b.updatedAt));
+            if (arr.length >= 100) {
+                const oldId = arr[0].id;
+                delete newState[oldId];
+            }
             return newState;
         case CLEAR_POSTS:
             return {};
