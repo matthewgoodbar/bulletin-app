@@ -5,7 +5,7 @@ const { ADMIN } = Role;
 const _ = require('underscore');
 
 const NUM_USERS = 20;
-const NUM_POSTS = 400;
+const NUM_POSTS = 500;
 const NUM_REPLIES = 200;
 
 const userSeeds = [];
