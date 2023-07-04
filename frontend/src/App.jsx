@@ -38,8 +38,8 @@ function App() {
       <ScrollBanner />
       <Navbar />
       <Routes>
-        <Route exact path="/" element={<Navigate to={lastBoard} replace />} />
-        <Route exact path="/:boardId" element={<Posts />} />
+        <Route exact path="/" element={<Navigate to={`/board/${lastBoard}`} replace />} />
+        <Route exact path="/board/:boardId" element={<Posts />} />
         <Route exact path="/post/:postId" element={<FullPost />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/signup" element={<Signup />} />

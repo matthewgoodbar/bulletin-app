@@ -8,6 +8,14 @@ const { formatArray } = require('../../utils/format');
 const socket = require('../../utils/socket');
 
 const prisma = new PrismaClient();
+const includeOptions = {
+    author: {
+        select: { username: true },
+    },
+    _count: {
+        select: { replies: true },
+    },
+};
 
 router.get('/author/:authorId', async (req, res, next) => {
     try {
@@ -16,14 +24,7 @@ router.get('/author/:authorId', async (req, res, next) => {
             where: {
                 authorId: parseInt(authorId),
             },
-            include: {
-                author: {
-                    select: { username: true },
-                },
-                _count: {
-                    select: { replies: true },
-                },
-            },
+            include: includeOptions,
         });
         res.json({
             posts: queriedPosts,
@@ -40,14 +41,7 @@ router.get('/:id', async (req, res, next) => {
             where: {
                 id: parseInt(id),
             },
-            include: {
-                author: {
-                    select: { username: true },
-                },
-                _count: {
-                    select: { replies: true },
-                },
-            },
+            include: includeOptions,
         });
         res.json({
             post: queriedPost,
@@ -60,14 +54,7 @@ router.get('/:id', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
     try {
         const queriedPosts = await prisma.post.findMany({
-            include: {
-                author: {
-                    select: { username: true },
-                },
-                _count: {
-                    select: { replies: true },
-                },
-            },
+            include: includeOptions,
             orderBy: {
                 updatedAt: 'desc',
             },
@@ -92,14 +79,7 @@ router.get('/board/:boardId', async (req, res, next) => {
             where: {
                 board: boardId,
             },
-            include: {
-                author: {
-                    select: { username: true },
-                },
-                _count: {
-                    select: { replies: true },
-                },
-            },
+            include: includeOptions,
             orderBy: {
                 updatedAt: 'desc',
             },
@@ -131,14 +111,7 @@ router.post('/', requireUser, validatePostInput, async (req, res, next) => {
             where: {
                 id: post.id,
             },
-            include: {
-                author: {
-                    select: { username: true },
-                },
-                _count: {
-                    select: { replies: true },
-                },
-            },
+            include: includeOptions,
         });
         socket.emit("publish new post", postToSendBack);
         res.json({

@@ -26,10 +26,10 @@ const Navbar = () => {
         <nav id="navbar">
             <div className="nav-button-group">
                 <Link to="/" className="nav-button">Home</Link>
-                <Link to="/A" className="nav-button">A</Link>
-                <Link to="/B" className="nav-button">B</Link>
-                <Link to="/C" className="nav-button">C</Link>
-                <Link to="/D" className="nav-button">D</Link>
+                <Link to="/board/A" className="nav-button">A</Link>
+                <Link to="/board/B" className="nav-button">B</Link>
+                <Link to="/board/C" className="nav-button">C</Link>
+                <Link to="/board/D" className="nav-button">D</Link>
                 <Link to="/about" className="nav-button">About</Link>
                 <Link to="/rules" className="nav-button">Rules</Link>
             </div>
