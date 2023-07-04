@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { fetchPosts, addPost, clearPosts, fetchBoard, addOrSlide } from "../../store/posts";
+import Connecting from "../Connecting";
 import PostPreview from "../PostPreview";
 import PostForm from "../PostForm";
 import socket from "../../utils/socket";
@@ -99,9 +100,7 @@ const Posts = () => {
 
     if (!connected) {
         return (
-            <p id="connecting-message" className="specific-page-content">
-                Connecting...
-            </p>
+            <Connecting />
         );
     }
     
