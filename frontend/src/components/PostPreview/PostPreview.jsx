@@ -1,5 +1,6 @@
 import { partialTimestamp } from "../../utils/date";
 import profilePic from '../../assets/noimage-64.png'
+import { Link } from "react-router-dom";
 
 const PostPreview = ({ post }) => {
 
@@ -29,7 +30,12 @@ const PostPreview = ({ post }) => {
                 <p className="post-id">Post ID: {post.id}</p>
                 <p className="post-title">{post.title}</p>
                 <p className="post-body">{post.body}</p>
-                <p className="post-date">{partialTimestamp(post.createdAt)}</p>
+                <div className="post-preview-footer">
+                    <Link to={`/post/${post.id}`}>
+                        {post._count.replies} {parseInt(post._count.replies) === 1 ? "reply" : "replies"}
+                    </Link>
+                    <p className="post-date">{partialTimestamp(post.createdAt)}</p>
+                </div>
             </div>
         </li>
     )

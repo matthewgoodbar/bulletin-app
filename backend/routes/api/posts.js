@@ -18,9 +18,10 @@ router.get('/author/:authorId', async (req, res, next) => {
             },
             include: {
                 author: {
-                    select: {
-                        username: true,
-                    },
+                    select: { username: true },
+                },
+                _count: {
+                    select: { replies: true },
                 },
             },
         });
@@ -41,9 +42,10 @@ router.get('/:id', async (req, res, next) => {
             },
             include: {
                 author: {
-                    select: {
-                        username: true,
-                    },
+                    select: { username: true },
+                },
+                _count: {
+                    select: { replies: true },
                 },
             },
         });
@@ -60,9 +62,10 @@ router.get('/', async (req, res, next) => {
         const queriedPosts = await prisma.post.findMany({
             include: {
                 author: {
-                    select: {
-                        username: true,
-                    },
+                    select: { username: true },
+                },
+                _count: {
+                    select: { replies: true },
                 },
             },
             orderBy: {
@@ -91,9 +94,10 @@ router.get('/board/:boardId', async (req, res, next) => {
             },
             include: {
                 author: {
-                    select: {
-                        username: true,
-                    },
+                    select: { username: true },
+                },
+                _count: {
+                    select: { replies: true },
                 },
             },
             orderBy: {
@@ -129,9 +133,10 @@ router.post('/', requireUser, validatePostInput, async (req, res, next) => {
             },
             include: {
                 author: {
-                    select: {
-                        username: true,
-                    },
+                    select: { username: true },
+                },
+                _count: {
+                    select: { replies: true },
                 },
             },
         });

@@ -14,6 +14,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Goodbye from './components/Goodbye';
 import Posts from './components/Posts';
+import FullPost from './components/FullPost';
 import NotFound from './components/NotFound';
 
 import { getCurrentUser } from './store/session';
@@ -39,6 +40,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Navigate to={lastBoard} replace />} />
         <Route exact path="/:boardId" element={<Posts />} />
+        <Route exact path="/post/:postId" element={<FullPost />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/goodbye" element={<Goodbye />} />

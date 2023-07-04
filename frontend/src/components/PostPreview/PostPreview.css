@@ -44,11 +44,16 @@
 }
 
 .post-date {
-    text-align: right;
+    /* text-align: right; */
 }
 
 .post-id {
     text-align: right;
+}
+
+.post-preview-footer {
+    display: flex;
+    justify-content: space-between;
 }
 
 .post-preview-profile-picture {
