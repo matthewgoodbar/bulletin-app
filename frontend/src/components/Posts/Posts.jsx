@@ -32,7 +32,7 @@ const Posts = () => {
     };
     
     const roomJoined = () => {
-        console.log("Joined room: " + boardId);
+        console.log("Joined room: board " + boardId);
         setConnected(true);
         dispatch(clearPosts());
         dispatch(fetchBoard(boardId));

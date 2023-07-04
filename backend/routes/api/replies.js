@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { Prisma, PrismaClient } = require('@prisma/client');
 const { Board } = require('@prisma/client');
-const validatePostInput = require('../../validations/posts');
 const { requireUser } = require('../../config/passport');
 const { formatArray } = require('../../utils/format');
 const socket = require('../../utils/socket');
@@ -12,20 +11,17 @@ const includeOptions = {
     author: {
         select: { username: true },
     },
-    _count: {
-        select: { replies: true },
+    post: {
+        select: { board: true },
     },
 };
 
-router.get('/board/:boardId', async (req, res, next) => {
+router.get('/post/:postId', async (req, res, next) => {
     try {
-        let { boardId } = req.params;
-        if (!Board[boardId]) {
-            boardId = "A";
-        }
-        const queriedPosts = await prisma.post.findMany({
+        const { postId } = req.params;
+        const replies = await prisma.reply.findMany({
             where: {
-                board: boardId,
+                postId: parseInt(postId),
             },
             include: includeOptions,
             orderBy: {
@@ -33,19 +29,19 @@ router.get('/board/:boardId', async (req, res, next) => {
             },
             take: 100,
         });
-        const formattedPosts = formatArray(queriedPosts);
+        const formattedReplies = formatArray(replies);
         res.json({
-            posts: formattedPosts,
+            replies: formattedReplies,
         });
-    } catch (err) {
+    } catch(err) {
         return next(err);
     }
 });
 
-router.get('/author/:authorId', async (req, res, next) => {
+router.get('/author/authorId', async (req, res, next) => {
     try {
         const { authorId } = req.params;
-        const queriedPosts = await prisma.post.findMany({
+        const replies = await prisma.reply.findMany({
             where: {
                 authorId: parseInt(authorId),
             },
@@ -54,10 +50,11 @@ router.get('/author/:authorId', async (req, res, next) => {
                 updatedAt: 'desc',
             },
         });
+        const formattedReplies = formatArray(replies);
         res.json({
-            posts: queriedPosts,
+            replies: formattedReplies,
         });
-    } catch (err) {
+    } catch(err) {
         return next(err);
     }
 });
@@ -65,57 +62,55 @@ router.get('/author/:authorId', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
     try {
         const { id } = req.params;
-        const queriedPost = await prisma.post.findUnique({
+        const reply = await prisma.reply.findUnique({
             where: {
                 id: parseInt(id),
             },
             include: includeOptions,
         });
         res.json({
-            post: queriedPost,
-        });
-    } catch (err) {
+            reply: reply,
+        })
+    } catch(err) {
         return next(err);
     }
 });
 
 router.get('/', async (req, res, next) => {
     try {
-        const queriedPosts = await prisma.post.findMany({
+        const replies = await prisma.reply.findMany({
             include: includeOptions,
             orderBy: {
                 updatedAt: 'desc',
             },
             take: 100,
         });
-        const formattedPosts = formatArray(queriedPosts);
+        const formattedReplies = formatArray(replies);
         res.json({
-            posts: formattedPosts,
+            replies: formattedReplies,
         });
-    } catch (err) {
+    } catch(err) {
         return next(err);
     }
 });
 
-router.post('/', requireUser, validatePostInput, async (req, res, next) => {
+router.post('/:postId', async (req, res, next) => {
     try {
         socket.connect();
-        const { title, body, board } = req.body;
-        const { id } = req.user;
-        const post = await prisma.post.create({
+        const { authorId, postId, body } = req.body;
+        const reply = await prisma.reply.create({
             data: {
-                title: title,
+                authorId: parseInt(authorId),
+                postId: parseInt(postId),
                 body: body,
-                authorId: parseInt(id),
-                board: board,
             },
             include: includeOptions,
         });
-        socket.emit("publish new post", post);
+        socket.emit("publish new reply", reply);
         res.json({
-            message: "success",
+            message: "success"
         });
-    } catch (err) {
+    } catch(err) {
         return next(err);
     }
 });

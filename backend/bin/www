@@ -42,6 +42,10 @@ io.on("connection", (socket) => {
     io.to(`board ${post.board}`).emit("pull new post", { post });
   });
 
+  socket.on("publish new reply", (reply) => {
+    io.to(`post ${reply.postId}`).emit("pull new reply", { reply });
+  });
+
   socket.on("disconnect", (reason) => {
     serverLog("Disconnected: " + socket.id);
     serverLog("Reason: " + reason);

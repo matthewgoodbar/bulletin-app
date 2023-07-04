@@ -28,14 +28,6 @@
     gap: var(--global-padding);
 }
 
-#connecting-message {
-    background-color: var(--theme-1-light);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: x-large;
-}
-
 @media (min-width: 1000px) {
     #form-and-box {
         flex-direction: row-reverse;
