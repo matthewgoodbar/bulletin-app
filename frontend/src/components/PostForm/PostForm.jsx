@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { createPost, clearPostErrors } from "../../store/posts";
 
-const PostForm = ({ setPostFormOpen, setBoard, currentBoard }) => {
+const PostForm = ({ setPostFormOpen, currentBoard }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();

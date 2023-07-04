@@ -39,7 +39,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("publish new post", (post) => {
-    io.to(post.board).emit("pull new post", { post });
+    io.to(`board ${post.board}`).emit("pull new post", { post });
   });
 
   socket.on("disconnect", (reason) => {

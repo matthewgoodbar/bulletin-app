@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from './components/Routes/Routes';
 
@@ -21,6 +21,7 @@ import { getCurrentUser } from './store/session';
 function App() {
 
   const [loaded, setLoaded] = useState(false);
+  const lastBoard = useSelector(state => state.session.lastBoard);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,15 +37,11 @@ function App() {
       <ScrollBanner />
       <Navbar />
       <Routes>
-        <Route exact path="/" element={<Posts />} />
-        <Route exact path="/A" element={<Posts displayBoard={"A"} />} />
-        <Route exact path="/B" element={<Posts displayBoard={"B"} />} />
-        <Route exact path="/C" element={<Posts displayBoard={"C"} />} />
-        <Route exact path="/D" element={<Posts displayBoard={"D"} />} />
+        <Route exact path="/" element={<Navigate to={lastBoard} replace />} />
+        <Route exact path="/:boardId" element={<Posts />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/goodbye" element={<Goodbye />} />
-        {/* <Route exact path = "/posts" element={<Posts />} /> */}
         <Route exact path="/404" element={<NotFound />} />
         <Route 
           path='*'
