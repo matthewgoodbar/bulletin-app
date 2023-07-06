@@ -24,12 +24,12 @@ const removeReply = replyId => ({
     replyId,
 });
 
-const addOrSlideReply = reply => ({
+export const addOrSlideReply = reply => ({
     type: ADD_OR_SLIDE,
     reply,
 });
 
-const clearReplies = () => ({
+export const clearReplies = () => ({
     type: CLEAR_REPLIES,
 });
 
@@ -43,9 +43,11 @@ const clearReplyErrors = () => ({
 });
 
 // Thunk action creators
-const fetchReplies = postId => async dispatch => {
+export const fetchReplies = postId => async dispatch => {
     try {
-        // const res = await jwtFetch(`/api/`)
+        const res = await jwtFetch(`/api/replies/post/${postId}`);
+        const { replies } = await res.json();
+        return dispatch(addReplies(replies));
     } catch (err) {
         const errBody = await err.json();
         if (errBody.statusCode === 400) {
@@ -56,11 +58,39 @@ const fetchReplies = postId => async dispatch => {
 
 const nullErrors = null;
 export const replyErrorsReducer = (state=nullErrors, action) => {
-
-}
+    switch (action.type) {
+        case RECEIVE_REPLY_ERRORS:
+            return action.errors;
+        case CLEAR_REPLY_ERRORS:
+            return nullErrors;
+        default:
+            return state;
+    }
+};
 
 const repliesReducer = (state={}, action) => {
-
+    const newState = { ...state };
+    switch (action.type) {
+        case ADD_REPLY:
+            return { ...state, [action.reply.id]: action.reply };
+        case ADD_REPLIES:
+            return { ...state, ...action.replies };
+        case REMOVE_REPLY:
+            delete newState[action.reply.id];
+            return newState;
+        case ADD_OR_SLIDE:
+            newState[action.reply.id] = action.reply;
+            const arr = Object.values(newState).sort((a,b) => new Date(a.updatedAt) - new Date(b.updatedAt));
+            if (arr.length >= 100) {
+                const oldId = arr[0].id;
+                delete newState[oldId];
+            }
+            return newState;
+        case CLEAR_REPLIES:
+            return {};
+        default:
+            return newState;
+    }
 };
 
 export default repliesReducer;

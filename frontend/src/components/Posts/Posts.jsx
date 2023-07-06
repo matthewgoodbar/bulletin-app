@@ -38,7 +38,7 @@ const Posts = () => {
         dispatch(fetchBoard(boardId));
     };
 
-    const pullNewPost = ({ post }) => {
+    const pullPost = ({ post }) => {
         dispatch(addOrSlide(post));
     };
 
@@ -48,14 +48,14 @@ const Posts = () => {
         socket.connect();
         socket.on("connected", connectionEstablished);
         socket.on("room joined", roomJoined);
-        socket.on("pull new post", pullNewPost);
+        socket.on("pull post", pullPost);
     };
 
     const handleDisconnect = () => {
         console.log("Disconnecting...");
         socket.off("connected", connectionEstablished);
         socket.off("room joined", roomJoined);
-        socket.off("pull new post", pullNewPost);
+        socket.off("pull post", pullPost);
         socket.disconnect();
         setConnected(false);
     };

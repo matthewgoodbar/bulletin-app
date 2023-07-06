@@ -38,12 +38,12 @@ io.on("connection", (socket) => {
     socket.emit("room joined");
   });
 
-  socket.on("publish new post", (post) => {
-    io.to(`board ${post.board}`).emit("pull new post", { post });
+  socket.on("publish post", (post) => {
+    io.to(`board ${post.board}`).emit("pull post", { post });
   });
 
-  socket.on("publish new reply", (reply) => {
-    io.to(`post ${reply.postId}`).emit("pull new reply", { reply });
+  socket.on("publish reply", (reply) => {
+    io.to(`post ${reply.postId}`).emit("pull reply", { reply });
   });
 
   socket.on("disconnect", (reason) => {

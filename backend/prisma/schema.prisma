@@ -13,6 +13,7 @@ model Post {
   title     String    @db.VarChar(40)
   body      String
   board     Board     @default(A)
+  bumps     Int       @default(0)
   createdAt DateTime  @default(now()) @db.Timestamp(6)
   updatedAt DateTime  @updatedAt
   author    User      @relation("WrittenPosts", fields: [authorId], references: [id], onDelete: Cascade)

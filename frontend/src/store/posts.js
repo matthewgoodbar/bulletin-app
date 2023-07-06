@@ -107,9 +107,22 @@ export const createPost = data => async dispatch => {
             method: 'POST',
             body: JSON.stringify(data),
         });
-        const { post } = await res.json();
-        // return dispatch(addPost(post));
+        const { message } = await res.json();
         return dispatch(clearPostErrors());
+    } catch(err) {
+        const errBody = await err.json();
+        if (errBody.statusCode === 400) {
+            return dispatch(receivePostErrors(errBody.errors));
+        }
+    }
+};
+
+export const bumpPost = postId => async dispatch => {
+    try {
+        const res = await jwtFetch(`/api/posts/bump/${postId}`, {
+            method: 'PATCH',
+        });
+        const { message } = await res.json();
     } catch(err) {
         const errBody = await err.json();
         if (errBody.statusCode === 400) {
@@ -145,7 +158,7 @@ const postsReducer = (state = {}, action) => {
             return newState;
         case ADD_OR_SLIDE:
             newState[action.post.id] = action.post;
-            const arr = Object.values(state).sort((a,b) => new Date(a.updatedAt) - new Date(b.updatedAt));
+            const arr = Object.values(newState).sort((a,b) => new Date(a.updatedAt) - new Date(b.updatedAt));
             if (arr.length >= 100) {
                 const oldId = arr[0].id;
                 delete newState[oldId];

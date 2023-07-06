@@ -111,7 +111,55 @@ router.post('/', requireUser, validatePostInput, async (req, res, next) => {
             },
             include: includeOptions,
         });
-        socket.emit("publish new post", post);
+        socket.emit("publish post", post);
+        res.json({
+            message: "success",
+        });
+    } catch (err) {
+        return next(err);
+    }
+});
+
+router.patch('/bump/:id', async (req, res, next) => {
+    try {
+        socket.connect();
+        const { id } = req.params;
+        const post = await prisma.post.update({
+            where: {
+                id: parseInt(id),
+            },
+            data: {
+                bumps: {
+                    increment: 1,
+                }
+            },
+            include: includeOptions,
+        });
+        socket.emit("publish post", post);
+        res.json({
+            message: "success",
+        });
+    } catch (err) {
+        return next(err);
+    }
+});
+
+router.patch('/:id', requireUser, validatePostInput, async (req, res, next) => {
+    try {
+        socket.connect();
+        const { title, body } = req.body;
+        const { id } = req.params;
+        const post = await prisma.post.update({
+            where: {
+                id: parseInt(id),
+            },
+            data: {
+                title,
+                body,
+            },
+            include: includeOptions,
+        });
+        socket.emit("publish post", post);
         res.json({
             message: "success",
         });

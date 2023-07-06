@@ -106,7 +106,7 @@ router.post('/:postId', async (req, res, next) => {
             },
             include: includeOptions,
         });
-        socket.emit("publish new reply", reply);
+        socket.emit("publish reply", reply);
         res.json({
             message: "success"
         });

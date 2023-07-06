@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchPost, clearPosts } from "../../store/posts";
+import { addOrSlideReply, fetchReplies } from "../../store/replies";
 import socket from "../../utils/socket";
 
 const FullPost = () => {
@@ -21,11 +22,11 @@ const FullPost = () => {
         setConnected(true);
         dispatch(clearPosts());
         dispatch(fetchPost(postId));
-        // dispatch(fetchBoard(boardId));
+        dispatch(fetchReplies(postId));
     };
 
-    const pullNewReply = ({ reply }) => {
-        // dispatch(addOrSlideReply(reply));
+    const pullReply = ({ reply }) => {
+        dispatch(addOrSlideReply(reply));
     };
 
     //Connecting & Disconnecting
@@ -34,14 +35,14 @@ const FullPost = () => {
         socket.connect();
         socket.on("connected", connectionEstablished);
         socket.on("room joined", roomJoined);
-        socket.on("pull new reply", pullNewReply);
+        socket.on("pull reply", pullReply);
     };
 
     const handleDisconnect = () => {
         console.log("Disconnecting...");
         socket.off("connected", connectionEstablished);
         socket.off("room joined", roomJoined);
-        socket.off("pull new reply", pullNewReply);
+        socket.off("pull reply", pullReply);
         socket.disconnect();
         setConnected(false);
     };
