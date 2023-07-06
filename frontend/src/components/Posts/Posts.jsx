@@ -77,7 +77,6 @@ const Posts = () => {
     if (currentUser) {
         if (postFormOpen) {
             postButton = (
-                // <button onClick={e => setPostFormOpen(false)}>Close Post Form</button>
                 <></>
             );
         } else {
@@ -87,7 +86,6 @@ const Posts = () => {
         }
     } else {
         postButton = (
-            // <p>You must be <Link to="/login">logged in</Link> to post!</p>
             <button onClick={e => navigate("/login")}>Create New Post</button>
         );
     }
@@ -120,9 +118,11 @@ const Posts = () => {
                 <div id="posts-list" ref={scrollRef}>
                     <ul>
                         {posts &&
-                        posts.map((post) => 
-                            <PostPreview key={post.id} post={post} />
-                        )}
+                        posts.map((post) => <PostPreview key={post.id} post={post} /> )
+                        }
+                        <li className="end-of-feed">
+                            <p>End of the line!</p>
+                        </li>
                     </ul>
                 </div>
             </div>

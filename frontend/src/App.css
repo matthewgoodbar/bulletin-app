@@ -72,6 +72,12 @@ h2 {
   gap: var(--global-padding);
 }
 
+@media (min-width: 1000px) {
+  #form-and-box {
+      flex-direction: row-reverse;
+  }
+}
+
 /* For PostPreview and Reply components */
 .message-list-element {
   display: flex;
@@ -80,7 +86,7 @@ h2 {
   box-sizing: border-box;
   border-bottom: 1px solid black;
   background-color: var(--theme-1-light);
-  animation-name: new-post;
+  animation-name: new-message;
   animation-duration: 1s;
 }
 

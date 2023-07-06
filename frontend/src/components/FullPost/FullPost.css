@@ -5,6 +5,7 @@
     flex: 1;
     overflow-y: hidden;
     border: 1px solid black;
+    background-color: var(--theme-1-light);
 }
 
 #replies-header {
@@ -17,5 +18,18 @@
 }
 
 #replies-list {
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+}
 
+.op-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.post-replies-divider {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid black;
+    padding: var(--global-padding);
 }

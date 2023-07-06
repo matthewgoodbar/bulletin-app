@@ -20,6 +20,13 @@
     overflow-y: scroll;
 }
 
+.end-of-feed {
+    display: flex;
+    justify-content: center;
+    background-color: var(--theme-1-light);
+    padding: var(--global-padding);
+}
+
 @media (min-width: 1000px) {
     #form-and-box {
         flex-direction: row-reverse;
