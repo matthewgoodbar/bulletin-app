@@ -1,0 +1,9 @@
+
+.reply-body {
+    flex: 1;
+}
+
+.reply-footer {
+    display: flex;
+    justify-content: flex-end;
+}

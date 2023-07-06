@@ -62,3 +62,100 @@ h2 {
   flex-direction: column;
   align-items: center;
 }
+
+/* For use in Posts, FullPost components */
+#form-and-box {
+  overflow-y: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--global-padding);
+}
+
+/* For PostPreview and Reply components */
+.message-list-element {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  border-bottom: 1px solid black;
+  background-color: var(--theme-1-light);
+  animation-name: new-post;
+  animation-duration: 1s;
+}
+
+.message-profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  padding: var(--global-padding);
+  border-right: 1px solid black;
+  overflow: hidden;
+}
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+  padding: var(--global-padding);
+  gap: var(--global-padding);
+  flex: 1;
+}
+
+.message-header-m {
+  display: none;
+}
+
+.message-title {
+  font-weight: bold;
+}
+
+.message-body {
+  flex: 1;
+}
+
+.message-id {
+  text-align: right;
+}
+
+.message-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.message-profile-picture {
+  width: 64px;
+}
+
+@media (max-width: 700px) {
+  .message-profile-picture {
+      width: 32px;
+  }
+
+  .message-profile {
+      display: none;
+  }
+
+  .message-id {
+      display: none;
+  }
+
+  .message-header-m {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+
+  .message-header-m span {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: var(--global-padding);
+  }
+}
+
+@keyframes new-message {
+  from {background-color: var(--theme-1-dark);}
+  to {background-color: var(--theme-1-light);}
+}

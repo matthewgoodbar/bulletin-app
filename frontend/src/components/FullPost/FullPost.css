@@ -1,0 +1,21 @@
+
+#replies-box {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: hidden;
+    border: 1px solid black;
+}
+
+#replies-header {
+    background-color: var(--theme-1-light);
+    border-bottom: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--global-padding);
+}
+
+#replies-list {
+
+}
