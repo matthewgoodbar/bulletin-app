@@ -67,7 +67,7 @@
 
 @media (min-width: 1000px) {
     .post-form-open {
-        flex-direction: column-reverse;
+        flex-direction: column;
     }
 
     .post-form {

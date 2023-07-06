@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { fetchPost, clearPosts } from "../../store/posts";
 import { addOrSlideReply, clearReplies, fetchReplies } from "../../store/replies";
 import profilePic from '../../assets/noimage-64.png'
@@ -127,6 +127,7 @@ const FullPost = () => {
                 <div id="replies-header">
                     <h2>{post && post.title}</h2>
                     <div>
+                        <Link to={`/board/${post.board}`}>Back to {post.board}</Link>
                         <button onClick={scrollToTop}>Back to Top</button>
                         {postButton}
                     </div>
