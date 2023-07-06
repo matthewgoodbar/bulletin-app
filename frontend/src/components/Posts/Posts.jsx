@@ -76,18 +76,12 @@ const Posts = () => {
     let postButton;
     if (currentUser) {
         if (postFormOpen) {
-            postButton = (
-                <></>
-            );
+            postButton = ( <></> );
         } else {
-            postButton = (
-                <button onClick={e => setPostFormOpen(true)}>Create New Post</button>
-            );
+            postButton = ( <button onClick={e => setPostFormOpen(true)}>Create New Post</button> );
         }
     } else {
-        postButton = (
-            <button onClick={e => navigate("/login")}>Create New Post</button>
-        );
+        postButton = ( <button onClick={e => navigate("/login")}>Create New Post</button> );
     }
 
     if (!boards.has(boardId)) {

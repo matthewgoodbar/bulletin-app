@@ -38,7 +38,7 @@ const receiveReplyErrors = errors => ({
     errors,
 })
 
-const clearReplyErrors = () => ({
+export const clearReplyErrors = () => ({
     type: CLEAR_REPLY_ERRORS,
 });
 
@@ -56,6 +56,23 @@ export const fetchReplies = postId => async dispatch => {
     }
 };
 
+export const createReply = data => async dispatch => {
+    try {
+        const res = await jwtFetch(`/api/replies/${data.postId}`, {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+        const { message } = await res.json();
+        return dispatch(clearReplyErrors());
+    } catch(err) {
+        const errBody = await err.json();
+        if (errBody.statusCode === 400) {
+            return dispatch(receiveReplyErrors(errBody.errors));
+        }
+    }
+};
+
+//Reply errors reducer
 const nullErrors = null;
 export const replyErrorsReducer = (state=nullErrors, action) => {
     switch (action.type) {
@@ -68,6 +85,7 @@ export const replyErrorsReducer = (state=nullErrors, action) => {
     }
 };
 
+//Replies reducer
 const repliesReducer = (state={}, action) => {
     const newState = { ...state };
     switch (action.type) {

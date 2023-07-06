@@ -120,6 +120,9 @@ const FullPost = () => {
 
     return (
         <div id="form-and-box">
+            {postFormOpen &&
+            <PostForm setPostFormOpen={setPostFormOpen} originalPost={post}/>
+            }
             <div id="replies-box">
                 <div id="replies-header">
                     <h2>{post && post.title}</h2>
