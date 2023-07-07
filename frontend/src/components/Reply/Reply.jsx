@@ -1,7 +1,17 @@
 import { partialTimestamp } from "../../utils/date";
 import profilePic from '../../assets/noimage-64.png'
+import { useLayoutEffect, useRef } from "react";
+import { gsap } from "gsap";
 
 const Reply = ({ reply }) => {
+
+    const replyElement = useRef(null);
+
+    useLayoutEffect(() => {
+        gsap.fromTo(replyElement.current, 
+            { backgroundColor: 'rgb(219, 163, 146)' }, 
+            { backgroundColor: 'rgb(240, 224, 214)', duration: 1 });
+    }, [reply]);
 
     const userInfo = (
         <>
@@ -15,7 +25,7 @@ const Reply = ({ reply }) => {
     );
     
     return (
-        <li className="message-list-element">
+        <li className="message-list-element" ref={replyElement}>
             <div className="message-profile">
                 {userInfo}
             </div>

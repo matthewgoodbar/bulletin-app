@@ -1,8 +1,18 @@
 import { partialTimestamp } from "../../utils/date";
 import profilePic from '../../assets/noimage-64.png'
 import { Link } from "react-router-dom";
+import { useLayoutEffect, useRef } from "react";
+import { gsap } from "gsap";
 
 const PostPreview = ({ post }) => {
+
+    const postElement = useRef(null);
+
+    useLayoutEffect(() => {
+        gsap.fromTo(postElement.current, 
+            { backgroundColor: 'rgb(219, 163, 146)' }, 
+            { backgroundColor: 'rgb(240, 224, 214)', duration: 1 });
+    }, [post]);
 
     const userInfo = (
         <>
@@ -16,7 +26,7 @@ const PostPreview = ({ post }) => {
     );
     
     return (
-        <li className="message-list-element">
+        <li className="message-list-element" ref={postElement}>
             <div className="message-profile">
                 {userInfo}
             </div>

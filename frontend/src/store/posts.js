@@ -159,7 +159,7 @@ const postsReducer = (state = {}, action) => {
         case ADD_OR_SLIDE:
             newState[action.post.id] = action.post;
             const arr = Object.values(newState).sort((a,b) => new Date(a.updatedAt) - new Date(b.updatedAt));
-            if (arr.length >= 100) {
+            if (arr.length > 100) {
                 const oldId = arr[0].id;
                 delete newState[oldId];
             }

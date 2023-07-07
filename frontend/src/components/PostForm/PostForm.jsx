@@ -58,7 +58,7 @@ const PostForm = ({ setPostFormOpen, currentBoard, originalPost }) => {
             setTitle("");
             setBody("");
             if (boardRadio != currentBoard) {
-                navigate(`/${boardRadio}`);
+                navigate(`/board/${boardRadio}`);
             }
         } else {
             navigate("/login");

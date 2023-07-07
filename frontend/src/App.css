@@ -86,9 +86,14 @@ h2 {
   box-sizing: border-box;
   border-bottom: 1px solid black;
   background-color: var(--theme-1-light);
+  /* animation-name: new-message; */
+  /* animation-duration: 1s; */
+}
+
+/* .new-message-anim {
   animation-name: new-message;
   animation-duration: 1s;
-}
+} */
 
 .message-profile {
   display: flex;
