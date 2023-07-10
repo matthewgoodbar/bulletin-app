@@ -15,7 +15,9 @@ const includeOptions = {
     _count: {
         select: { replies: true },
     },
-    savedBy: true,
+    savedBy: {
+        select: { id: true }
+    },
 };
 
 router.get('/board/:boardId', async (req, res, next) => {
@@ -152,11 +154,11 @@ router.patch('/save/:id', requireUser, async (req, res, next) => {
         const userId = req.user.id;
         const post = await prisma.post.update({
             where: {
-                id,
+                id: parseInt(id),
             },
             data: {
                 savedBy: {
-                    connect: { id: userId },
+                    connect: { id: parseInt(userId) },
                 },
             },
             include: includeOptions,

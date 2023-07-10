@@ -3,16 +3,24 @@ import profilePic from '../../assets/noimage-64.png'
 import { Link } from "react-router-dom";
 import { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { useDispatch, useSelector } from "react-redux";
+import { savePost } from "../../store/posts";
 
 const PostPreview = ({ post }) => {
 
     const postElement = useRef(null);
+    const currentUser = useSelector(state => state.session.currentUser);
+    const dispatch = useDispatch();
 
     useLayoutEffect(() => {
         gsap.fromTo(postElement.current, 
             { backgroundColor: 'rgb(219, 163, 146)' }, 
             { backgroundColor: 'rgb(240, 224, 214)', duration: 1 });
     }, [post]);
+
+    const handleSave = e => {
+        dispatch(savePost(post.id));
+    };
 
     const userInfo = (
         <>
@@ -24,6 +32,14 @@ const PostPreview = ({ post }) => {
             <p>{post.author.username}</p>
         </>
     );
+
+    let saveButton;
+    if (!currentUser) {
+        saveButton = <></>;
+    } else {
+        let alreadySaved = post.savedBy.map(ob => ob.id).includes(currentUser.id);
+        saveButton = <button onClick={handleSave} disabled={alreadySaved}>{alreadySaved ? "Post Saved" : "Save Post"}</button>
+    }
     
     return (
         <li className="message-list-element" ref={postElement}>
@@ -37,12 +53,16 @@ const PostPreview = ({ post }) => {
                     </span>
                     <p>Post ID: {post.id}</p>
                 </div>
-                <p className="message-id">Post ID: {post.id}</p>
+                <div>
+                    {saveButton}
+                    <p className="message-id">Post ID: {post.id}</p>
+                </div>
                 <p className="message-title">{post.title}</p>
                 <p className="message-body">{post.body}</p>
                 <div className="message-footer">
                     <Link to={`/post/${post.id}`}>
-                        {post._count.replies} {parseInt(post._count.replies) === 1 ? "reply" : "replies"}
+                        {post._count.replies} {parseInt(post._count.replies) === 1 ? "reply, " : "replies, "}
+                        {post.savedBy.length} {post.savedBy.length === 1 ? "save" : "saves"}
                     </Link>
                     <p className="message-date">{partialTimestamp(post.createdAt)}</p>
                 </div>
