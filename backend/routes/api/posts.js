@@ -15,6 +15,7 @@ const includeOptions = {
     _count: {
         select: { replies: true },
     },
+    savedBy: true,
 };
 
 router.get('/board/:boardId', async (req, res, next) => {
@@ -132,6 +133,31 @@ router.patch('/bump/:id', async (req, res, next) => {
                 bumps: {
                     increment: 1,
                 }
+            },
+            include: includeOptions,
+        });
+        socket.emit("publish post", post);
+        res.json({
+            message: "success",
+        });
+    } catch (err) {
+        return next(err);
+    }
+});
+
+router.patch('/save/:id', requireUser, async (req, res, next) => {
+    try {
+        socket.connect();
+        const { id } = req.params;
+        const userId = req.user.id;
+        const post = await prisma.post.update({
+            where: {
+                id,
+            },
+            data: {
+                savedBy: {
+                    connect: { id: userId },
+                },
             },
             include: includeOptions,
         });

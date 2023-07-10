@@ -131,6 +131,20 @@ export const bumpPost = postId => async dispatch => {
     }
 };
 
+export const savePost = postId => async dispatch => {
+    try {
+        const res = await jwtFetch(`/api/posts/save/${postId}`, {
+            method: 'PATCH',
+        });
+        const { message } = await res.json();
+    } catch(err) {
+        const errBody = await err.json();
+        if (errBody.statusCode === 400) {
+            return dispatch(receivePostErrors(errBody.errors));
+        }
+    }
+};
+
 // Post Errors Reducer
 const nullErrors = null;
 
