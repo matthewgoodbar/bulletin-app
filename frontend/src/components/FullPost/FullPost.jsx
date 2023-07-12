@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { fetchPost, clearPosts } from "../../store/posts";
+import { fetchPost, clearPosts, savePost } from "../../store/posts";
 import { addOrSlideReply, clearReplies, fetchReplies } from "../../store/replies";
 import profilePic from '../../assets/noimage-64.png'
 import Connecting from "../Connecting";
@@ -86,6 +86,20 @@ const FullPost = () => {
         postButton = ( <button onClick={e => navigate("/login")}>Reply</button> );
     }
 
+    const handleSave = e => {
+        dispatch(savePost(post.id));
+    };
+
+    let saveButton;
+    if (!currentUser) {
+        saveButton = <></>;
+    } else {
+        let alreadySaved = post.savedBy.map(ob => ob.id).includes(currentUser.id);
+        saveButton = (<button onClick={handleSave} disabled={alreadySaved}>
+            {alreadySaved ? "Saved" : "Save"}
+        </button>);
+    }
+
     const opInfo = (
         <>
             <img 
@@ -107,12 +121,15 @@ const FullPost = () => {
                     <span>
                         {opInfo}
                     </span>
-                    <p>Post ID: {post.id}</p>
+                    {saveButton}
                 </div>
-                <p className="message-id">Post ID: {post.id}</p>
+                <div className="save-button">
+                    {saveButton}
+                </div>
                 <p className="message-body">{post.body}</p>
                 <div className="op-footer">
                     <p className="message-date">{partialTimestamp(post.createdAt)}</p>
+                    <p>Post ID: {post.id}</p>
                 </div>
             </div>
         </li>

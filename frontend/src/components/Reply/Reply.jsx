@@ -34,12 +34,11 @@ const Reply = ({ reply }) => {
                     <span>
                         {userInfo}
                     </span>
-                    <p>Reply ID: {reply.id}</p>
                 </div>
-                <p className="message-id">Reply ID: {reply.id}</p>
                 <p className="message-body">{reply.body}</p>
                 <div className="reply-footer">
                     <p className="message-date">{partialTimestamp(reply.createdAt)}</p>
+                    <p>Reply ID: {reply.id}</p>
                 </div>
             </div>
         </li>

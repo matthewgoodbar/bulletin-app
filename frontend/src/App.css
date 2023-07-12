@@ -119,6 +119,10 @@ h2 {
   flex: 1;
 }
 
+.message-id {
+  text-align: right;
+}
+
 .save-button {
   text-align: right;
 }
