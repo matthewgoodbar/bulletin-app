@@ -38,7 +38,9 @@ const PostPreview = ({ post }) => {
         saveButton = <></>;
     } else {
         let alreadySaved = post.savedBy.map(ob => ob.id).includes(currentUser.id);
-        saveButton = <button onClick={handleSave} disabled={alreadySaved}>{alreadySaved ? "Post Saved" : "Save Post"}</button>
+        saveButton = (<button onClick={handleSave} disabled={alreadySaved}>
+            {alreadySaved ? "Saved" : "Save"}
+        </button>);
     }
     
     return (
@@ -51,20 +53,20 @@ const PostPreview = ({ post }) => {
                     <span>
                         {userInfo}
                     </span>
-                    <p>Post ID: {post.id}</p>
-                </div>
-                <div>
                     {saveButton}
-                    <p className="message-id">Post ID: {post.id}</p>
+                </div>
+                <div className="save-button">
+                    {saveButton}
                 </div>
                 <p className="message-title">{post.title}</p>
                 <p className="message-body">{post.body}</p>
                 <div className="message-footer">
+                    <p className="message-date">{partialTimestamp(post.createdAt)}</p>
+                    <p>Post ID: {post.id}</p>
                     <Link to={`/post/${post.id}`}>
                         {post._count.replies} {parseInt(post._count.replies) === 1 ? "reply, " : "replies, "}
                         {post.savedBy.length} {post.savedBy.length === 1 ? "save" : "saves"}
                     </Link>
-                    <p className="message-date">{partialTimestamp(post.createdAt)}</p>
                 </div>
             </div>
         </li>

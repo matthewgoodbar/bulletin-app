@@ -86,14 +86,7 @@ h2 {
   box-sizing: border-box;
   border-bottom: 1px solid black;
   background-color: var(--theme-1-light);
-  /* animation-name: new-message; */
-  /* animation-duration: 1s; */
 }
-
-/* .new-message-anim {
-  animation-name: new-message;
-  animation-duration: 1s;
-} */
 
 .message-profile {
   display: flex;
@@ -126,7 +119,7 @@ h2 {
   flex: 1;
 }
 
-.message-id {
+.save-button {
   text-align: right;
 }
 
@@ -148,7 +141,7 @@ h2 {
       display: none;
   }
 
-  .message-id {
+  .save-button {
       display: none;
   }
 
