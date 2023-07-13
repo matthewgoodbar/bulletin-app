@@ -9,6 +9,7 @@ import Reply from "../Reply";
 import PostForm from "../PostForm";
 import socket from "../../utils/socket";
 import { partialTimestamp } from "../../utils/date";
+import { setLastVisited } from "../../store/session";
 
 const FullPost = () => {
 
@@ -66,6 +67,7 @@ const FullPost = () => {
 
     useEffect(() => {
         handleConnect();
+        dispatch(setLastVisited(`post/${postId}`));
         return () => handleDisconnect();
     }, [dispatch, postId]);
 

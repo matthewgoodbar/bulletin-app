@@ -22,7 +22,7 @@ import { getCurrentUser } from './store/session';
 function App() {
 
   const [loaded, setLoaded] = useState(false);
-  const lastBoard = useSelector(state => state.session.lastBoard);
+  const lastVisited = useSelector(state => state.session.lastVisited);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function App() {
       <ScrollBanner />
       <Navbar />
       <Routes>
-        <Route exact path="/" element={<Navigate to={`/board/${lastBoard}`} replace />} />
+        <Route exact path="/" element={<Navigate to={`/${lastVisited}`} replace />} />
         <Route exact path="/board/:boardId" element={<Posts />} />
         <Route exact path="/post/:postId" element={<FullPost />} />
         <Route exact path="/login" element={<Login />} />

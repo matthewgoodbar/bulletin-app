@@ -7,7 +7,7 @@ import PostPreview from "../PostPreview";
 import PostForm from "../PostForm";
 import socket from "../../utils/socket";
 import boards from "../../utils/boards";
-import { setLastBoard } from "../../store/session";
+import { setLastVisited } from "../../store/session";
 
 const Posts = () => {
 
@@ -63,7 +63,7 @@ const Posts = () => {
     //Connect on mount, disconnect on dismount
     useEffect(() => {
         handleConnect();
-        dispatch(setLastBoard(boardId));
+        dispatch(setLastVisited(`board/${boardId}`));
         return () => handleDisconnect();
     }, [dispatch, boardId]);
 

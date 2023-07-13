@@ -4,7 +4,7 @@ const RECEIVE_CURRENT_USER = "session/RECEIVE_CURRENT_USER";
 const RECEIVE_SESSION_ERRORS = "session/RECEIVE_SESSION_ERRORS";
 const CLEAR_SESSION_ERRORS = "session/CLEAR_SESSION_ERRORS";
 const RECEIVE_USER_LOGOUT = "session/RECEIVE_USER_LOGOUT";
-const SET_LAST_BOARD = "session/SET_LAST_BOARD";
+const SET_LAST_VISITED = "session/SET_LAST_VISITED";
 
 const receiveCurrentUser = currentUser => ({
     type: RECEIVE_CURRENT_USER,
@@ -24,9 +24,9 @@ const logoutUser = () => ({
     type: RECEIVE_USER_LOGOUT,
 });
 
-export const setLastBoard = board => ({
-    type: SET_LAST_BOARD,
-    board,
+export const setLastVisited = lastVisited => ({
+    type: SET_LAST_VISITED,
+    lastVisited,
 });
 
 // Thunk Actions
@@ -79,7 +79,7 @@ export const sessionErrorsReducer = (state = nullErrors, action) => {
 // Session Reducer
 const initialState = {
     currentUser: undefined,
-    lastBoard: "A",
+    lastVisited: "board/A",
 };
 
 const sessionReducer = (state = initialState, action) => {
@@ -89,8 +89,8 @@ const sessionReducer = (state = initialState, action) => {
             return { ...state, currentUser: action.currentUser };
         case RECEIVE_USER_LOGOUT:
             return { ...state, currentUser: undefined };
-        case SET_LAST_BOARD:
-            return { ...state, lastBoard: action.board };
+        case SET_LAST_VISITED:
+            return { ...state, lastVisited: action.lastVisited };
         default:
             return state;
     }
