@@ -10,6 +10,7 @@ const Signup = () => {
     const [password2, setpassword2] = useState('');
     const errors = useSelector(state => state.errors.session);
     const currentUser = useSelector(state => state.session.currentUser);
+    const lastVisited = useSelector(state => state.session.lastVisited);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -47,7 +48,7 @@ const Signup = () => {
 
     if (currentUser) {
         return (
-            <Navigate to="/" />
+            <Navigate to={`/${lastVisited}`} />
         );
     }
     
