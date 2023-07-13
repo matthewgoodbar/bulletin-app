@@ -4,13 +4,16 @@ const { Prisma, PrismaClient } = require('@prisma/client');
 const { Board } = require('@prisma/client');
 const validatePostInput = require('../../validations/posts');
 const { requireUser } = require('../../config/passport');
-const { formatArray } = require('../../utils/format');
+const { formatPosts, formatPost } = require('../../utils/format');
 const socket = require('../../utils/socket');
 
 const prisma = new PrismaClient();
 const includeOptions = {
     author: {
-        select: { username: true },
+        select: {
+            username: true,
+            icon: true,
+        },
     },
     _count: {
         select: { replies: true },
@@ -36,9 +39,8 @@ router.get('/board/:boardId', async (req, res, next) => {
             },
             take: 100,
         });
-        const formattedPosts = formatArray(queriedPosts);
         res.json({
-            posts: formattedPosts,
+            posts: formatPosts(queriedPosts),
         });
     } catch (err) {
         return next(err);
@@ -58,7 +60,28 @@ router.get('/author/:authorId', async (req, res, next) => {
             },
         });
         res.json({
-            posts: queriedPosts,
+            posts: formatPosts(queriedPosts),
+        });
+    } catch (err) {
+        return next(err);
+    }
+});
+
+router.get('/saved/:userId', async (req, res, next) => {
+    try {
+        const { userId } = req.params;
+        const queriedUser = await prisma.user.findUnique({
+            where: {
+                id: parseInt(userId),
+            },
+            include: {
+                savedPosts: {
+                    include: includeOptions,
+                },
+            },
+        });
+        res.json({
+            posts: formatPosts(queriedUser.savedPosts),
         });
     } catch (err) {
         return next(err);
@@ -75,7 +98,7 @@ router.get('/:id', async (req, res, next) => {
             include: includeOptions,
         });
         res.json({
-            post: queriedPost,
+            post: formatPost(queriedPost),
         });
     } catch (err) {
         return next(err);
@@ -91,9 +114,8 @@ router.get('/', async (req, res, next) => {
             },
             take: 100,
         });
-        const formattedPosts = formatArray(queriedPosts);
         res.json({
-            posts: formattedPosts,
+            posts: formatPosts(queriedPosts),
         });
     } catch (err) {
         return next(err);
@@ -114,7 +136,7 @@ router.post('/', requireUser, validatePostInput, async (req, res, next) => {
             },
             include: includeOptions,
         });
-        socket.emit("publish post", post);
+        socket.emit("publish post", formatPost(post));
         res.json({
             message: "success",
         });
@@ -138,7 +160,7 @@ router.patch('/bump/:id', async (req, res, next) => {
             },
             include: includeOptions,
         });
-        socket.emit("publish post", post);
+        socket.emit("publish post", formatPost(post));
         res.json({
             message: "success",
         });
@@ -163,7 +185,7 @@ router.patch('/save/:id', requireUser, async (req, res, next) => {
             },
             include: includeOptions,
         });
-        socket.emit("publish post", post);
+        socket.emit("publish post", formatPost(post));
         res.json({
             message: "success",
         });
@@ -187,7 +209,7 @@ router.patch('/:id', requireUser, validatePostInput, async (req, res, next) => {
             },
             include: includeOptions,
         });
-        socket.emit("publish post", post);
+        socket.emit("publish post", formatPost(post));
         res.json({
             message: "success",
         });

@@ -11,27 +11,17 @@ const debug = require('debug')('backend:debug');
 const { formatArray } = require('../../utils/format');
 
 const prisma = new PrismaClient();
-
-router.get('/', async (req, res, next) => {
-  try {
-    const users = await prisma.user.findMany({
-      select: {
-        id: true,
-        username: true,
-        createdAt: true,
-        updatedAt: true,
-        icon: true,
-        bio: true,
-      },
-    });
-    const formattedUsers = formatArray(users);
-    res.json({
-      users: formattedUsers,
-    });
-  } catch (err) {
-    return next(err);
-  }
-});
+const selectOptions = {
+  id: true,
+  username: true,
+  createdAt: true,
+  updatedAt: true,
+  icon: true,
+  bio: true,
+  _count: {
+    select: { posts: true },
+  },
+};
 
 router.get('/current', restoreUser, (req, res) => {
   if (!isProduction) {
@@ -57,17 +47,24 @@ router.get('/:id', async (req, res, next) => {
       where: {
         id: parseInt(id),
       },
-      select: {
-        id: true,
-        username: true,
-        createdAt: true,
-        updatedAt: true,
-        icon: true,
-        bio: true,
-      },
+      select: selectOptions,
     });
     res.json({
       user,
+    });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.get('/', async (req, res, next) => {
+  try {
+    const users = await prisma.user.findMany({
+      select: selectOptions,
+    });
+    const formattedUsers = formatArray(users);
+    res.json({
+      users: formattedUsers,
     });
   } catch (err) {
     return next(err);

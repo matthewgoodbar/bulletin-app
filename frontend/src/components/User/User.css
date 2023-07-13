@@ -1,0 +1,9 @@
+
+#user-box {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: hidden;
+    border: 1px solid black;
+    background-color: var(--theme-1-light);
+}

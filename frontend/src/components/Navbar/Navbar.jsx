@@ -9,7 +9,7 @@ const Navbar = () => {
     if (currentUser) {
         sessionLinks = (
             <div className="nav-button-group">
-                <Link to={`/users/${currentUser.id}`}>Profile</Link>
+                <Link to={`/user/${currentUser.id}`}>Profile</Link>
                 <Link to="/goodbye" className="nav-button">Log Out</Link>
             </div>
         );

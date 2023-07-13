@@ -37,7 +37,7 @@ const PostPreview = ({ post }) => {
     if (!currentUser) {
         saveButton = <></>;
     } else {
-        let alreadySaved = post.savedBy.map(ob => ob.id).includes(currentUser.id);
+        let alreadySaved = post.savedBy.includes(currentUser.id);
         saveButton = (<button onClick={handleSave} disabled={alreadySaved}>
             {alreadySaved ? "Saved" : "Save"}
         </button>);
