@@ -3,7 +3,7 @@ const router = express.Router();
 const { Prisma, PrismaClient } = require('@prisma/client');
 const { Board } = require('@prisma/client');
 const validatePostInput = require('../../validations/posts');
-const { requireUser } = require('../../config/passport');
+const { requireUser, restoreUser } = require('../../config/passport');
 const { formatPosts, formatPost } = require('../../utils/format');
 const socket = require('../../utils/socket');
 
@@ -122,7 +122,7 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-router.post('/', requireUser, validatePostInput, async (req, res, next) => {
+router.post('/', restoreUser, validatePostInput, async (req, res, next) => {
     try {
         socket.connect();
         const { title, body, board } = req.body;
@@ -169,7 +169,7 @@ router.patch('/bump/:id', async (req, res, next) => {
     }
 });
 
-router.patch('/save/:id', requireUser, async (req, res, next) => {
+router.patch('/save/:id', restoreUser, async (req, res, next) => {
     try {
         socket.connect();
         const { id } = req.params;
@@ -194,14 +194,16 @@ router.patch('/save/:id', requireUser, async (req, res, next) => {
     }
 });
 
-router.patch('/:id', requireUser, validatePostInput, async (req, res, next) => {
+router.patch('/:id', restoreUser, validatePostInput, async (req, res, next) => {
     try {
         socket.connect();
         const { title, body } = req.body;
         const { id } = req.params;
+        const authorId = req.user.id;
         const post = await prisma.post.update({
             where: {
                 id: parseInt(id),
+                authorId: parseInt(authorId),
             },
             data: {
                 title,
