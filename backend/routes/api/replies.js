@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { Prisma, PrismaClient } = require('@prisma/client');
 const { Board } = require('@prisma/client');
-const { requireUser } = require('../../config/passport');
+const { requireUser, restoreUser } = require('../../config/passport');
 const { formatArray } = require('../../utils/format');
 const socket = require('../../utils/socket');
 
@@ -94,10 +94,11 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-router.post('/:postId', async (req, res, next) => {
+router.post('/:postId', restoreUser, async (req, res, next) => {
     try {
         socket.connect();
-        const { authorId, postId, body } = req.body;
+        const { postId, body } = req.body;
+        const authorId = req.user.id;
         const reply = await prisma.reply.create({
             data: {
                 authorId: parseInt(authorId),

@@ -50,7 +50,6 @@ const PostForm = ({ setPostFormOpen, currentBoard, originalPost }) => {
         e.preventDefault();
         if (currentUser) {
             dispatch(createPost({
-                authorId: currentUser.id,
                 title,
                 body,
                 board: boardRadio,
@@ -69,7 +68,6 @@ const PostForm = ({ setPostFormOpen, currentBoard, originalPost }) => {
         e.preventDefault();
         if (currentUser) {
             dispatch(createReply({
-                authorId: currentUser.id,
                 postId: originalPost.id,
                 body,
             }))
