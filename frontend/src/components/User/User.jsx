@@ -87,6 +87,13 @@ const User = () => {
         postButton = ( <button onClick={e => navigate("/login")}>Create New Post</button> );
     }
 
+    let userBio;
+    userBio = (
+        <li id="user-bio" className="message-list-element" key={0}>
+
+        </li>
+    );
+
     if (!connected || !user) {
         return (
             <Connecting />
